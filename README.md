@@ -66,6 +66,8 @@ If you have a License for Sublime Text, copy that from your email into a file `s
 ## To-Do
 
 * More robust fall-over on already configured systems. If Rbenv etc are already installed then ignore installing that part
+* set up configuration keys to determine what modules to install
+* 
 
 ## Contributing
 
