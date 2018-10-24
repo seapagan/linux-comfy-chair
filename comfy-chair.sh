@@ -13,7 +13,7 @@ sudo apt update
 sudo apt -y full-upgrade
 
 # make sure we have the required libraries and tools already installed before starting.
-sudo apt install -y build-essential curl gettext libssl-dev libreadline-dev zlib1g-dev sqlite3 libsqlite3-dev libgtk2.0-0 libbz2-dev sublime-text libxml2-dev libdb-dev gedit pcmanfm ccache libffi-dev
+sudo apt install -y build-essential curl gettext libssl-dev libreadline-dev zlib1g-dev sqlite3 libsqlite3-dev libgtk2.0-0 libbz2-dev sublime-text libxml2-dev libdb-dev gedit ccache libffi-dev
 
 # install winbind and support lib to ping WINS hosts
 sudo apt install -y winbind libnss-winbind
@@ -21,10 +21,6 @@ sudo apt install -y winbind libnss-winbind
 if ! grep -qc 'wins' /etc/nsswitch.conf ; then
   sudo sed -i '/hosts:/ s/$/ wins/' /etc/nsswitch.conf
 fi
-
-# set the DISPLAY variable to point to the XServer running on our Windows PC
-echo >> ~/.bashrc
-echo "export DISPLAY=:0" >> ~/.bashrc
 
 # start with rbenv and plugins installation
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -152,4 +148,4 @@ fi
 # TODO
 
 echo
-echo "You now need to close and restart the Bash shell"
+echo "You now need to reboot this system for all the new changes to take affect."
