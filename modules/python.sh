@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # python.sh
 # next install python (both 2.x and 3.x trees) using Pyenv
 
@@ -20,6 +21,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.15
-pyenv install 3.7.0
-# 'python' and 'python2.7' target 2.7.15 while 'python3.6' targets 3.6.5
-pyenv global 2.7.15 3.7.0
+pyenv install 3.7.1
+# 'python' and 'python2' target 2.7.15 while 'python3' and 'python3' targets 3.7.1
+pyenv global 2.7.15 3.7.1

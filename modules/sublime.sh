@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # sublime.sh
 # set up Sublime Text with Package control and a useful selection of default packages.
 # You can edit the list of pre-installed packages in the file `./support/Package\ Control.sublime-settings`

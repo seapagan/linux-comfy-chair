@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # ruby.sh
 # install ruby via the 'rbenv' system and some supporting plugins.
 
@@ -33,13 +34,13 @@ echo $'bundler\nsass\nscss_lint\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-g
 # set up .gemrc to avoid installing documentation for each gem...
 echo "gem: --no-document" > ~/.gemrc
 # install the required ruby version and set as default
-rbenv install 2.5.1
-rbenv global 2.5.1
+rbenv install 2.5.3
+rbenv global 2.5.3
 
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
 # These are the 'ri' and 'rdoc' scripts
-rm ~/.rbenv/versions/2.5.1/bin/rdoc
-rm ~/.rbenv/versions/2.5.1/bin/ri
+rm ~/.rbenv/versions/2.5.3/bin/rdoc
+rm ~/.rbenv/versions/2.5.3/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
