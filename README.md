@@ -69,6 +69,13 @@ If you have a License for Sublime Text, copy that from your email into a file `s
 * set up configuration keys to determine what modules to install
 * 
 
+
+### Further proposed modules
+
+* Vagrant
+* Docker
+* Samba
+
 ## Contributing
 
 1. Fork it
