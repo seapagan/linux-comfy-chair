@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # cleanup.sh
 # any last tidy and config changes to be done
 
