@@ -5,6 +5,12 @@
 THISPATH="$(dirname $(readlink -f "$0"))"
 echo "We are running from : $THISPATH"
 
+# make sure we have Git installed already...
+if [ ! $(which git) ]; then
+  echo "Git is not installed, can't continue."
+  exit 1
+fi
+
 # source in the configuration file..
 . comfy.config
 
