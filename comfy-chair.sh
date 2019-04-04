@@ -12,19 +12,19 @@ if [ ! $(which git) ]; then
 fi
 
 # source in the configuration file..
-. comfy.config
+. $THISPATH/comfy.config
 
 # run the individual modules. This will be changed to read from an array of
 # modules..
-. modules/updates.sh
-. modules/packages.sh
-. modules/ruby.sh
-. modules/node.sh
-. modules/python.sh
-. modules/perl.sh
-. modules/qemu-kvm.sh
-. modules/sublime.sh
-. modules/cleanup.sh
+. $THISPATH/modules/updates.sh
+. $THISPATH/modules/packages.sh
+. $THISPATH/modules/ruby.sh
+. $THISPATH/modules/node.sh
+. $THISPATH/modules/python.sh
+. $THISPATH/modules/perl.sh
+. $THISPATH/modules/qemu-kvm.sh
+. $THISPATH/modules/sublime.sh
+. $THISPATH/modules/cleanup.sh
 
 echo
 echo "You now need to reboot this system for all the new changes to take affect."
