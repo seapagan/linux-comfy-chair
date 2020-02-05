@@ -20,7 +20,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-pyenv install 2.7.15
-pyenv install 3.7.1
-# 'python' and 'python2' target 2.7.15 while 'python3' and 'python3' targets 3.7.1
-pyenv global 2.7.15 3.7.1
+pyenv install 2.7.17
+pyenv install 3.8.1
+# 'python' and 'python3' target 3.8.1 while 'python2' targets 2.7.17
+pyenv global 3.8.1 2.7.17
