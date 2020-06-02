@@ -13,8 +13,8 @@ fi
 source ~/perl5/perlbrew/etc/bashrc
 
 # install perl and select it...
-perlbrew install perl-5.29.5
-perlbrew switch perl-5.29.5
+perlbrew install perl-5.30.3
+perlbrew switch perl-5.30.3
 perlbrew install-cpanm
 # set up some cpan configuration
 (echo y; echo o conf auto_commit 1; echo o conf yaml_module YAML::XS; echo o conf use_sqlite yes; echo o conf commit) | cpan
