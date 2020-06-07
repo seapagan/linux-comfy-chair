@@ -8,18 +8,29 @@
 #sudo sed -i 's/$/ restricted universe multiverse/' /etc/apt/sources.list
 
 # some minimal versions of Ubuntu lack these...
-sudo apt-get install software-properties-common curl ca-certificates gnupg -y
+sudo apt-get install -y software-properties-common curl ca-certificates \
+                        gnupg gnupg-agent apt-transport-https
 
 # Add some third-party PPA repos to give us more recent versions of assorted software...
 # add the latest Git repo...
 sudo add-apt-repository ppa:git-core/ppa -y
+
 # add updated php repo ...
 sudo add-apt-repository ppa:ondrej/php -y
+
 # add updated Nginx repo, also contains some useful updated libraries ...
 sudo add-apt-repository ppa:ondrej/nginx -y
-# add Postgresql repo so we can get latest versions if needed.
+
+# add Postgresql repo so we can get latest versions if needed...
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+# add the official Docker repo so we can install recent versions if needed...
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
 
 # update then upgrade...
 sudo apt update

@@ -18,6 +18,8 @@ fi
 # modules..
 . $THISPATH/modules/updates.sh
 . $THISPATH/modules/packages.sh
+#. $THISPATH/modules/nginx-php-pgsql.sh
+#. $THISPATH/modules/docker.sh
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
