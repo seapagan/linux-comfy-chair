@@ -10,7 +10,6 @@ The script works on a bare newly installed system and provides the following fun
 
 * Updated to the latest package versions from Ubuntu / Debian upstream.
 * Have the `build-essential` package installed plus all required support libraries to enable the below functionality to work.
-* [`Sublime Text 3`][sublime] Editor installed as standard with `Package Control` and a number of useful packages.
 * The Latest version of [`Git`][git] installed. A skeleton `.gitconfig` will be set up with a few aliases.
 * The [`Ruby`][ruby] scripting language installed via [`Rbenv`][rbenv] with the current version of Rails installed as standard along with several other common gems.
 * [`Node.js`][node] both the most recent LTS version and latest stable version via [`NVM`][nvm]. The LTS version is activated by default.
@@ -30,38 +29,6 @@ cd ubuntu-win-bootstrap
 ./comfy-chair.sh
 ```
 
-## Sublime Text 3
-The bootstrap script will automatically install Sublime Text 3 with `Package Control` and a number of useful packages. These will properly be installed during the first and second times Sublime Text is opened. I recommend you run Sublime the first time,  wait a few seconds them close (this installs the `Package control` plugin). Open it a second time and the rest of the packages will be installed. It may take a few minutes for the packages to install depending on your internet speed so try not to close the program too soon.
-
-#### Running sublime Text
-```bash
-$ subl
-```
-
-#### Packages installed are :
-* All Autocomplete
-* Babel
-* Color Highlighter
-* DocBlockr
-* Emmet
-* ExportHtml
-* Git
-* GitGutter
-* HexViewer
-* Markdown Preview
-* MarkdownEditing
-* Package Control
-* SassBeautify
-* SideBarEnhancements
-* SublimeCodeIntel
-* SublimeLinter
-* SublimeREPL
-* Terminal
-* TrailingSpaces
-
-The list of packages that are installed can be changed or added to by editing the  [Package Control.sublime-settings](support/Package%20Control.sublime-settings)
-
-If you have a License for Sublime Text, copy that from your email into a file `support/License.sublime_license` before running the Bootstrap script, and it wil be properly installed to Sublime for you.
 
 ## To-Do
 
@@ -75,6 +42,7 @@ If you have a License for Sublime Text, copy that from your email into a file `s
 * Vagrant
 * Docker
 * Samba
+* Nginx and PHP(-fpm)
 
 ## Contributing
 
