@@ -5,7 +5,7 @@
 # now install some important libraries for the next stages...
 sudo apt install -y build-essential curl gettext libssl-dev libreadline-dev \
                     zlib1g-dev sqlite3 libsqlite3-dev libbz2-dev \
-                    libxml2-dev libdb-dev ccache libffi-dev libpg-dev
+                    libxml2-dev libdb-dev ccache libffi-dev libpq-dev
 
 # install winbind and its support lib to ping WINS hosts
 sudo apt install -y winbind libnss-winbind
