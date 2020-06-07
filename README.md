@@ -16,6 +16,8 @@ The script works on a bare newly installed system and provides the following fun
 * The [`Python`][python] scripting language both the latest 2.7 and 3.x versions via [`Pyenv`][pyenv]
 * Install the latest STABLE [`Perl`][perl] scripting language via [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured. Several PERL modules that make cpan easier are also pre-installed
 * Enable resolution of WINS hostnames
+* Install Nginx web server, php and Postgresql database (disabled by default)
+* Install Docker and Docker-compose (disabled by default)
 
 **Please read all of this file before starting**
 
