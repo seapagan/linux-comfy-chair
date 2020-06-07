@@ -23,7 +23,6 @@ fi
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
 . $THISPATH/modules/qemu-kvm.sh
-. $THISPATH/modules/sublime.sh
 . $THISPATH/modules/cleanup.sh
 
 echo
