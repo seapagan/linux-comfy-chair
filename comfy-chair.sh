@@ -22,7 +22,7 @@ fi
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
-. $THISPATH/modules/qemu-kvm.sh
+#. $THISPATH/modules/qemu-kvm.sh
 . $THISPATH/modules/cleanup.sh
 
 echo
