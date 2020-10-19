@@ -23,7 +23,7 @@ sudo add-apt-repository ppa:ondrej/nginx -y
 
 # add Postgresql repo so we can get latest versions if needed...
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo sh -c 'echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 
 # add the official Docker repo so we can install recent versions if needed...
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
