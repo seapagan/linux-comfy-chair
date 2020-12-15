@@ -42,9 +42,7 @@ cd ubuntu-win-bootstrap
 ### Further proposed modules
 
 * Vagrant
-* Docker
 * Samba
-* Nginx and PHP(-fpm)
 
 ## Contributing
 
