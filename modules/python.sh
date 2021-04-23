@@ -22,6 +22,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.18
-pyenv install 3.9.1
+pyenv install 3.9.4
 # 'python' and 'python3' target 3.9.1 while 'python2' targets 2.7.18
-pyenv global 3.9.1 2.7.18
+pyenv global 3.9.4 2.7.18

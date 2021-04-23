@@ -5,7 +5,7 @@
 # we already installed all the required ppa's etc in the packages/updates so
 # lets just install
 
-sudo apt install -y nginx php7.4-fpm postgresql-12
+sudo apt install -y nginx nginx-extras php7.4-fpm postgresql-12
 
 # now some common PHP extensions ...
 sudo apt install -y php7.4-common php7.4-mysql php7.4-xml php7.4-xmlrpc \
