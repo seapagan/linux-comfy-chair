@@ -7,6 +7,10 @@ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv
 git clone git://github.com/yyuu/pyenv-pip-migrate.git ~/.pyenv/plugins/pyenv-pip-migrate
 git clone https://github.com/yyuu/pyenv-ccache.git ~/.pyenv/plugins/pyenv-ccache
 
+# set up a default-packages file for python libraries to install with each new python or venv ...
+# for now, just a few that allow my vscode settings to work easier.
+echo $'wheel\npylint\nblack\nflake8\n' > ~/.pyenv/default-packages
+
 if ! grep -qc 'pyenv init' ~/.bashrc ; then
   echo "## Adding pyenv to .bashrc ##"
   echo >> ~/.bashrc
