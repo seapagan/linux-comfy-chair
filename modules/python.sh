@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # python.sh
 # next install python (both 2.x and 3.x trees) using Pyenv
+# will probably stop installing python2 in the near future as it is EOL.
 
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 # install a couple of plugins...
@@ -27,6 +28,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.18
-pyenv install 3.9.4
+pyenv install 3.9.5
 # 'python' and 'python3' target 3.9.1 while 'python2' targets 2.7.18
-pyenv global 3.9.4 2.7.18
+pyenv global 3.9.5 2.7.18
