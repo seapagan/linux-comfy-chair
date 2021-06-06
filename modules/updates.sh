@@ -8,7 +8,7 @@
 #sudo sed -i 's/$/ restricted universe multiverse/' /etc/apt/sources.list
 
 # some minimal versions of Ubuntu lack these...
-sudo apt-get install -y software-properties-common curl ca-certificates \
+sudo apt-get install -y software-properties-common curl wget ca-certificates \
                         gnupg gnupg-agent apt-transport-https
 
 # Add some third-party PPA repos to give us more recent versions of assorted software...
