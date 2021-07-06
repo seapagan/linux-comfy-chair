@@ -5,9 +5,10 @@
 THISPATH="$(dirname $(readlink -f "$0"))"
 echo "We are running from : $THISPATH"
 
-# make sure we have Git installed already...
-if [ ! $(which git) ]; then
-  echo "Git is not installed, can't continue."
+# make sure we have Git and sudo installed already. Some very minimal images
+# will not have these (eg the standard Ubuntu Docker image)
+if [ ! $(which git) ] || [ ! $(which sudo) ]; then
+  echo "Git or/and Sudo are not installed, please install these and restart."
   exit 1
 fi
 
