@@ -30,6 +30,6 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.18
-pyenv install 3.9.5
-# 'python' and 'python3' target 3.9.1 while 'python2' targets 2.7.18
-pyenv global 3.9.5 2.7.18
+pyenv install 3.9.6
+# 'python' and 'python3' target 3.9.6 while 'python2' targets 2.7.18
+pyenv global 3.9.6 2.7.18
