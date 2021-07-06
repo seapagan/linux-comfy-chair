@@ -4,8 +4,13 @@
         br = branch
         ci = commit
         cl = clone
+        lg = "log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 [push]
         default = current
 [credential]
         helper = cache --timeout 3600
-
+[init]
+        defaultBranch = main
+[core]
+        autocrlf = false
+        filemode = false
