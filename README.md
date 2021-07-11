@@ -19,6 +19,10 @@ This system has also been tested on Ubuntu 20.04 running under WSL2 and works pe
 * Due to the lack of background services, you will need to manually start Postgresql, Nginx, ssh etc as required. I use a script in my home dir so I can enable and disable at will when needed.
 * This may work under WSL version 1, and has worked in the past, however I no longer test against this version of WSL. In all cases it is worthwhile and very easy to upgrade to WSL Version 2
 
+If WSL is detected, the package `ubuntu-wsl` will also be installed if missing.
+This should already be there in the official Ubuntu image, but probably not
+custom ones
+
 I will continue to ensure compatibility with WSL as I now use this for one of my main development environments.
 
 ## General Information
