@@ -5,6 +5,14 @@
 THISPATH="$(dirname $(readlink -f "$0"))"
 echo "We are running from : $THISPATH"
 
+# lets see if we are running under WSL (Windows Sunsystem for Linux)
+read osrelease </proc/sys/kernel/osrelease
+if [[ $osrelease =~ "WSL" ]]; then
+  os="wsl"
+else
+  os="linux"
+fi
+
 # make sure we have Git and sudo installed already. Some very minimal images
 # will not have these (eg the standard Ubuntu Docker image)
 if [ ! $(which git) ] || [ ! $(which sudo) ]; then
@@ -19,8 +27,14 @@ fi
 # modules..
 . $THISPATH/modules/updates.sh
 . $THISPATH/modules/packages.sh
-#. $THISPATH/modules/nginx-php-pgsql.sh
-#. $THISPATH/modules/docker.sh
+
+# WSL Specific work
+if [ $os = "wsl" ]; then
+  . $THISPATH/modules/wsl.sh
+fi
+
+# . $THISPATH/modules/nginx-php-pgsql.sh
+# . $THISPATH/modules/docker.sh
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
