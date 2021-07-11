@@ -15,7 +15,7 @@ if ! grep -qc 'rbenv init' ~/.bashrc ; then
   echo 'eval "$(rbenv init - bash)"' >> ~/.bashrc
 fi
 # run the above command locally so we can get rbenv to work on this provisioning shell
-eval "$(rbenv init -bash)"
+eval "$(rbenv init - bash)"
 # install a set of useful plugins for rbenv...
 mkdir -p ~/.rbenv/plugins
 git clone https://github.com/ianheggie/rbenv-binstubs.git ~/.rbenv/plugins/rbenv-binstubs
