@@ -7,7 +7,7 @@ sudo apt install -y build-essential gettext libssl-dev libreadline-dev \
                     zlib1g-dev sqlite3 libsqlite3-dev libbz2-dev \
                     libxml2-dev libdb-dev ccache libffi-dev libpq-dev mcrypt \
                     liblzma-dev lzma libncurses5-dev xz-utils libxmlsec1-dev \
-                    tk-dev llvm
+                    tk-dev llvm libicu-dev libcurl4-openssl-dev
 
 # install some 'nice to have' that are missing from very mininal images...
 sudo apt install -y nano htop openssh-server openssh-client

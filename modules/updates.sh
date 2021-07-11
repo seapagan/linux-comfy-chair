@@ -10,7 +10,7 @@
 # some minimal versions of Ubuntu lack these...
 sudo apt-get install -y dialog apt-utils software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
-                        bash-completion
+                        bash-completion cmake pkg-config
 
 
 # Add some third-party PPA repos to give us more recent versions of assorted software...
