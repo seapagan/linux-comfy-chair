@@ -3,7 +3,7 @@
 # install ruby via the 'rbenv' system and some supporting plugins.
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
 # install dynamic bash extension
 cd ~/.rbenv && src/configure && make -C src
 # add the rbenv setup to our profile, only if it is not already there
@@ -12,10 +12,10 @@ if ! grep -qc 'rbenv init' ~/.bashrc ; then
   echo >> ~/.bashrc
   echo "# Set up Rbenv" >> ~/.bashrc
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-  echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+  echo 'eval "$(rbenv init - bash)"' >> ~/.bashrc
 fi
 # run the above command locally so we can get rbenv to work on this provisioning shell
-eval "$(rbenv init -)"
+eval "$(rbenv init - bash)"
 # install a set of useful plugins for rbenv...
 mkdir -p ~/.rbenv/plugins
 git clone https://github.com/ianheggie/rbenv-binstubs.git ~/.rbenv/plugins/rbenv-binstubs
@@ -34,14 +34,14 @@ echo $'bundler\nsass\nscss_lint\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-g
 # set up .gemrc to avoid installing documentation for each gem...
 echo "gem: --no-document" > ~/.gemrc
 # install the required ruby version and set as default
-rbenv install 2.7.3
-rbenv install 3.0.1
-rbenv global 2.7.3
+rbenv install 2.7.4
+rbenv install 3.0.2
+rbenv global 2.7.4
 
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
 # These are the 'ri' and 'rdoc' scripts
-rm ~/.rbenv/versions/2.7.3/bin/rdoc
-rm ~/.rbenv/versions/2.7.3/bin/ri
+rm ~/.rbenv/versions/2.7.4/bin/rdoc
+rm ~/.rbenv/versions/2.7.4/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
