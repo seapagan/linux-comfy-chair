@@ -37,6 +37,8 @@ if  [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
     # Remove diverted man binary
     sudo rm -f /usr/bin/man
     sudo dpkg-divert --quiet --remove --rename /usr/bin/man
+    # remove the reminder from the MOTD
+    sudo rm -f /etc/update-motd.d/60-unminimize
 fi
 
 # source in the configuration file..
