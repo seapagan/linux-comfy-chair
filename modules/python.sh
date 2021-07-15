@@ -33,3 +33,6 @@ pyenv install 2.7.18
 pyenv install 3.9.6
 # 'python' and 'python3' target 3.9.6 while 'python2' targets 2.7.18
 pyenv global 3.9.6 2.7.18
+# now update 'pip' in both versions ...
+python2 -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
