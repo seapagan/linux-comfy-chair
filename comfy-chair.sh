@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # these will run as the default non-privileged user.
 
-# save the path to this script for later use
-THISPATH="$(dirname $(readlink -f "$0"))"
-echo "We are running from : $THISPATH"
+# set a version number
+VERSION="1.0.0"
 
 # lets see if we are running under WSL (Windows Sunsystem for Linux)
 read osrelease </proc/sys/kernel/osrelease
@@ -12,6 +11,17 @@ if [[ $osrelease =~ "WSL" ]]; then
 else
   os="linux"
 fi
+
+echo "Linux Comfy Chair v $VERSION (c) Grant Ramsay (seapagan@gmail.com)"
+if [ $os = "wsl" ]; then
+  echo " - Running under the 'Windows Subsystem for Linux (WSL)"
+fi
+
+# save the path to this script for later use
+THISPATH="$(dirname $(readlink -f "$0"))"
+echo
+echo "We are running from : $THISPATH"
+echo
 
 # make sure we have Git and sudo installed already. Some very minimal images
 # will not have these (eg the standard Ubuntu Docker image)
