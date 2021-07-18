@@ -7,6 +7,9 @@
 # Before pushing to live we need to confirm they are actually missing...
 #sudo sed -i 's/$/ restricted universe multiverse/' /etc/apt/sources.list
 
+# update the package index just in case...
+sudo apt update
+
 # some minimal versions of Ubuntu lack these...
 sudo apt-get install -y dialog apt-utils software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
