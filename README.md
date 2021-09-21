@@ -25,6 +25,12 @@ custom ones
 
 I will continue to ensure compatibility with WSL as I now use this for one of my main development environments.
 
+## Note 2: Currently only for `bash` shell!
+
+The script writes configuration settings to .bashrc, which will mean lack of functionality under `Zsh` and others. I am currently starting to look at migrating to Zsh myself, so this will likely be fixed in future releases. 
+
+Under Zsh and others the Pyenv/Rbenv/NVM etc **will not work**.
+
 ## General Information
 
 The script works on a bare newly installed system and provides the following functionality :
