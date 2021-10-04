@@ -11,7 +11,17 @@ git clone https://github.com/jawshooah/pyenv-default-packages.git ~/.pyenv/plugi
 
 # set up a default-packages file for python libraries to install with each new python or venv ...
 # for now, just a few that allow my vscode settings to work easier.
-echo $'wheel\npylint\nblack\nflake8\n' > ~/.pyenv/default-packages
+cat <<- EOF > ~/.pyenv/default-packages
+wheel
+pylint
+black
+flake8
+flake8-docstrings
+pep8-naming
+pydocstyle
+ipython
+EOF
+
 
 if ! grep -qc 'pyenv init' ~/.bashrc ; then
   echo "## Adding pyenv to .bashrc ##"
