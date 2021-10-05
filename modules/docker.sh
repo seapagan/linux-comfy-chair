@@ -5,7 +5,7 @@
 # DONT DO ANY OF THIS IN WSL (Windows Subsystem for Linux)!
 if [ ! $os = "wsl" ]; then
   # docker
-  sudo apt-get  install docker-ce docker-ce-cli containerd.io
+  sudo apt install -y docker-ce docker-ce-cli containerd.io
   # remove the need for sudo...
   sudo usermod -aG docker $USER
 
