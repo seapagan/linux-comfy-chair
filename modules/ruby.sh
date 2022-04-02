@@ -30,18 +30,18 @@ git clone https://github.com/rkh/rbenv-whatis.git ~/.rbenv/plugins/rbenv-whatis
 git clone https://github.com/yyuu/rbenv-ccache.git ~/.rbenv/plugins/rbenv-ccache
 
 # set up a default-gems file for gems to install with each ruby...
-echo $'bundler\nsass\nscss_lint\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-gems
+echo $'bundler\nsassc\nscss_lint\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-gems
 # set up .gemrc to avoid installing documentation for each gem...
 echo "gem: --no-document" > ~/.gemrc
 # install the required ruby version and set as default
-rbenv install 2.7.4
-rbenv install 3.0.2
-rbenv global 2.7.4
+rbenv install 2.7.5
+rbenv install 3.1.1
+rbenv global 2.7.5
 
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
 # These are the 'ri' and 'rdoc' scripts
-rm ~/.rbenv/versions/2.7.4/bin/rdoc
-rm ~/.rbenv/versions/2.7.4/bin/ri
+rm ~/.rbenv/versions/2.7.5/bin/rdoc
+rm ~/.rbenv/versions/2.7.5/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
