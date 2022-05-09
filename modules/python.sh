@@ -5,7 +5,7 @@
 
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 # install a couple of plugins...
-git clone git://github.com/yyuu/pyenv-pip-migrate.git ~/.pyenv/plugins/pyenv-pip-migrate
+git clone https://github.com/yyuu/pyenv-pip-migrate.git ~/.pyenv/plugins/pyenv-pip-migrate
 git clone https://github.com/yyuu/pyenv-ccache.git ~/.pyenv/plugins/pyenv-ccache
 git clone https://github.com/jawshooah/pyenv-default-packages.git ~/.pyenv/plugins/pyenv-default-packages
 
@@ -40,9 +40,9 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.18
-pyenv install 3.9.6
-# 'python' and 'python3' target 3.9.6 while 'python2' targets 2.7.18
-pyenv global 3.9.6 2.7.18
+pyenv install 3.10.4
+# 'python' and 'python3' target 3.10.4 while 'python2' targets 2.7.18
+pyenv global 3.10.4 2.7.18
 # now update 'pip' in both versions ...
 python2 -m pip install --upgrade pip
 python3 -m pip install --upgrade pip
