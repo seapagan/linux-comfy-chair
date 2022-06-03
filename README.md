@@ -96,7 +96,7 @@ with this script.
 
 ### Installing Ruby versions < 3.1 fails on Ubuntu 22.04
 
-Issue #10. The OpenSSL version in Ubuntu 22.04 is incompatible with any ruby
+Issue [#10][issue-10]. The OpenSSL version in Ubuntu 22.04 is incompatible with any ruby
 below version 3 and causes installation errors. There is a work-around
 [here][issue-10-workaround] which I will shortly add to the script.
 
@@ -145,5 +145,6 @@ you find, or even a Pull Request with solutions 😎
 [perl]: https://www.perl.org/
 [perlbrew]: https://perlbrew.pl/
 
+[issue-10]: https://github.com/seapagan/linux-comfy-chair/issues/10
 [issue-10-workaround]:
     https://github.com/rbenv/ruby-build/discussions/1940#discussioncomment-2663209
