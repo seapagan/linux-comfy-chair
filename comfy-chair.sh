@@ -4,7 +4,15 @@
 # set a version number
 VERSION="1.0.0"
 
-# lets see if we are running under WSL (Windows Sunsystem for Linux)
+# make sure we are running under a Debian-based OS, as this script needs the
+# 'apt' command and their specific packages.
+debian=`dpkg --version | grep "Debian"`
+if [ -z "$debian" ]; then
+  echo "This script is only for Debian-based systems."
+  exit 1
+fi
+
+# lets see if we are running under WSL (Windows Subsystem for Linux)
 read osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
   os="wsl"
