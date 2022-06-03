@@ -9,7 +9,8 @@ both a certain amount of installed dependencies and a dependable state.
 Hence this script. This is the evolution of my previous work to bootstrap a new
 Raspberry PI system and Windows 10 'WSL', but for pure (Debian Based) Linux.
 Primary usage has been tested with Ubuntu though it should work with any
-Debian-based distribution.
+Debian-based distribution. Note that the script will only run on debian-based
+distributions (Debian, Ubuntu, Kali, Mint etc etc)
 
 **Note that the script is geared towards and tested on _server_ versions more
 than Desktop ones, though it has been used successfully on both.**
@@ -76,7 +77,10 @@ The script works on a bare newly installed system and provides the following fun
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
 * Enable resolution of WINS hostnames
-* Install Nginx web server, php and Postgresql database (disabled by default)
+* Install Nginx web server(Latest), PHP(v7.4) and Postgresql database(v12) ( all
+  3 disabled by default). I am planning (yet) to upgrade PHP and Postgresql
+  to more modern versions soon, though both these versions are currently (June
+  2022) at least still supported with security fixes.
 * Install Docker and Docker-compose (disabled by default)
 
 ## Security

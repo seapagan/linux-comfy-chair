@@ -16,7 +16,9 @@ sudo apt-get install -y dialog apt-utils software-properties-common curl wget \
                         bash-completion cmake pkg-config iputils-ping
 
 
-# Add some third-party PPA repos to give us more recent versions of assorted software...
+# Add some third-party PPA repos to give us more recent versions of assorted
+# software...
+
 # add the latest Git repo...
 sudo add-apt-repository ppa:git-core/ppa -y
 
