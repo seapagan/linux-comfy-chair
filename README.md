@@ -92,6 +92,14 @@ everything IN except for SSH is the first thing you do before even running this
 script! No responsibility will be taken for security breaches on systems set up
 with this script.
 
+## Current Issues/Bugs
+
+### Installing Ruby versions < 3.1 fails on Ubuntu 22.04
+
+Issue #10. The OpenSSL version in Ubuntu 22.04 is incompatible with any ruby
+below version 3 and causes installation errors. There is a work-around
+[here][issue-10-workaround] which I will shortly add to the script.
+
 ## Usage
 
 The simplest way to use this script is to clone into a completely new Ubuntu
@@ -136,3 +144,6 @@ you find, or even a Pull Request with solutions 😎
 [pyenv]: https://github.com/pyenv/pyenv
 [perl]: https://www.perl.org/
 [perlbrew]: https://perlbrew.pl/
+
+[issue-10-workaround]:
+    https://github.com/rbenv/ruby-build/discussions/1940#discussioncomment-2663209
