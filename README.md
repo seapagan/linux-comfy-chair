@@ -113,6 +113,25 @@ cd ubuntu-win-bootstrap
 ./comfy-chair.sh
 ```
 
+### Default branch has been renamed
+
+In line with many Open-Source projects, I have renamed the Default branch from
+`master` to `main`. If you have already cloned or forked this repository, please
+run the following commands in your local copies :
+
+```bash
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+```
+
+Optionally, also remove any tracking references to the old branch name :
+
+```bash
+git remote prune origin
+```
+
 ## To-Do
 
 * More robust fall-over on already configured systems. If Rbenv etc are already
