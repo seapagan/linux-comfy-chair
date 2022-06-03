@@ -78,7 +78,7 @@ The script works on a bare newly installed system and provides the following fun
   Several PERL modules that make cpan easier are also pre-installed
 * Enable resolution of WINS hostnames
 * Install Nginx web server(Latest), PHP(v7.4) and Postgresql database(v12) ( all
-  3 disabled by default). I am planning (yet) to upgrade PHP and Postgresql
+  3 disabled by default). I am planning (soon) to upgrade PHP and Postgresql
   to more modern versions soon, though both these versions are currently (June
   2022) at least still supported with security fixes.
 * Install Docker and Docker-compose (disabled by default)
