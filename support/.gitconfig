@@ -14,3 +14,6 @@
 [core]
         autocrlf = false
         filemode = false
+        pager = less -FRX
+[diff]
+        colorMoved = zebra
