@@ -4,6 +4,9 @@
 # set a version number
 VERSION="1.2.0"
 
+# ensure that we are not prompted to restart services during the install process
+export DEBIAN_FRONTEND=noninteractive
+
 # make sure we are running under a Debian-based OS, as this script needs the
 # 'apt' command and their specific packages.
 debian=`dpkg --version | grep "Debian"`

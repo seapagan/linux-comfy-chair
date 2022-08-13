@@ -11,7 +11,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y build-essential gettext \
                     libicu-dev libcurl4-openssl-dev checkinstall
 
 # install some 'nice to have' that are missing from very mininal images...
-sudo apt install -y nano htop openssh-server openssh-client
+sudo DEBIAN_FRONTEND=noninteractive apt install -y nano htop openssh-server openssh-client
 
 # install winbind and its support lib to ping WINS hosts
 sudo DEBIAN_FRONTEND=noninteractive apt install -y winbind libnss-winbind
