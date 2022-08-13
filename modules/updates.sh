@@ -13,7 +13,7 @@ sudo apt update
 # some minimal versions of Ubuntu lack these...
 sudo apt-get install -y dialog apt-utils software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
-                        bash-completion cmake pkg-config iputils-ping
+                        bash-completion cmake pkg-config iputils-ping lsb-release
 
 
 # Add some third-party PPA repos to give us more recent versions of assorted
@@ -33,11 +33,12 @@ curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo sh -c 'echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 
 # add the official Docker repo so we can install recent versions if needed...
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
 
 # update then upgrade...
 sudo apt update
