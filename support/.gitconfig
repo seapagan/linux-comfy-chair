@@ -5,6 +5,7 @@
         ci = commit
         cl = clone
         lg = "log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+        last = "log -1 HEAD"
 [push]
         default = current
 [credential]
@@ -17,3 +18,5 @@
         pager = less -FRX
 [diff]
         colorMoved = zebra
+[fetch]
+        prune = true
