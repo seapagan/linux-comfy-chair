@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # nginx-php.sh
 # install the Nginx webbrowser, php7.4-fpm and Postgresql database
-export DEBIAN_FRONTEND=noninteractive
 # we already installed all the required ppa's etc in the packages/updates so
 # lets just install
-sudo apt install -y nginx nginx-extras php7.4-fpm postgresql-14
+sudo apt DEBIAN_FRONTEND=noninteractive install -y nginx nginx-extras php7.4-fpm postgresql-14
 
 # also install php version 8.1
 sudo apt install -y php8.1 php8.1-fpm php8.1-cli

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # packages.sh
 # make sure we have the required libraries and tools already installed before starting.
-export DEBIAN_FRONTEND=noninteractive
+
 # now install some important libraries for the next stages...
-sudo apt install -y build-essential gettext \
+sudo DEBIAN_FRONTEND=noninteractive apt install -y build-essential gettext \
                     libssl-dev libreadline-dev zlib1g-dev sqlite3 \
                     libsqlite3-dev libbz2-dev libxml2-dev libdb-dev ccache \
                     libffi-dev libpq-dev mcrypt liblzma-dev lzma \
@@ -11,10 +11,10 @@ sudo apt install -y build-essential gettext \
                     libicu-dev libcurl4-openssl-dev checkinstall
 
 # install some 'nice to have' that are missing from very mininal images...
-sudo apt install -y nano htop openssh-server openssh-client
+sudo DEBIAN_FRONTEND=noninteractive apt install -y nano htop openssh-server openssh-client
 
 # install winbind and its support lib to ping WINS hosts
-sudo apt install -y winbind libnss-winbind
+sudo DEBIAN_FRONTEND=noninteractive apt install -y winbind libnss-winbind
 # need to append to the /etc/nsswitch.conf file to enable if not already done ...
 if ! grep -qc 'wins' /etc/nsswitch.conf ; then
   sudo sed -i '/hosts:/ s/$/ wins/' /etc/nsswitch.conf
