@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # updates.sh
 # ensure we have the latest packages, including git and sublime text repos
-
+export DEBIAN_FRONTEND=noninteractive
 # update the package index just in case...
 sudo apt update
 

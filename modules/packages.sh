@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # packages.sh
 # make sure we have the required libraries and tools already installed before starting.
-
+export DEBIAN_FRONTEND=noninteractive
 # now install some important libraries for the next stages...
 sudo apt install -y build-essential gettext \
                     libssl-dev libreadline-dev zlib1g-dev sqlite3 \

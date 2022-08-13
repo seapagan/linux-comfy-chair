@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # docker.sh
 # install docker and docker-compose
-
+export DEBIAN_FRONTEND=noninteractive
 # DONT DO ANY OF THIS IN WSL (Windows Subsystem for Linux)!
 if [ ! $os = "wsl" ]; then
   # docker. We no longer use the old V1 of docker compuse, we install v2.
