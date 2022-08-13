@@ -2,7 +2,7 @@
 # these will run as the default non-privileged user.
 
 # set a version number
-VERSION="1.1.0"
+VERSION="1.2.0"
 
 # make sure we are running under a Debian-based OS, as this script needs the
 # 'apt' command and their specific packages.
