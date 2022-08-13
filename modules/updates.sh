@@ -2,16 +2,12 @@
 # updates.sh
 # ensure we have the latest packages, including git and sublime text repos
 
-# Later versions of Ubuntu server dont have the full sources.list for apt which restricts us
-# a bit so we need to add them.
-# Before pushing to live we need to confirm they are actually missing...
-#sudo sed -i 's/$/ restricted universe multiverse/' /etc/apt/sources.list
-
 # update the package index just in case...
 sudo apt update
 
 # some minimal versions of Ubuntu lack these...
-sudo apt-get install -y dialog apt-utils software-properties-common curl wget \
+sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
+                        software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
                         bash-completion cmake pkg-config iputils-ping lsb-release
 
@@ -42,4 +38,4 @@ echo \
 
 # update then upgrade...
 sudo apt update
-sudo apt -y full-upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt -y full-upgrade
