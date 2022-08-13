@@ -13,7 +13,9 @@ Debian-based distribution. Note that the script will only run on debian-based
 distributions (Debian, Ubuntu, Kali, Mint etc etc)
 
 **Note that the script is geared towards and tested on _server_ versions more
-than Desktop ones, though it has been used successfully on both.**
+than Desktop ones, though it has been used successfully on both**. In fact my
+primary day-to-day machine runs Ubuntu Desktop (22.04) which was set up using
+this script.
 
 ## Prerequisites
 
@@ -77,10 +79,9 @@ The script works on a bare newly installed system and provides the following fun
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
 * Enable resolution of WINS hostnames
-* Install Nginx web server(Latest), PHP(v7.4) and Postgresql database(v12) ( all
-  3 disabled by default). I am planning (soon) to upgrade PHP and Postgresql
-  to more modern versions soon, though both these versions are currently (June
-  2022) at least still supported with security fixes.
+* Install Nginx web server(Latest), PHP(v7.4 & 8.1) and Postgresql database(v14)
+  (all 3 disabled by default). The default php cli version is explicitly set to
+  7.4 for the moment however.
 * Install Docker and Docker-compose (disabled by default)
 
 ## Security
@@ -94,11 +95,10 @@ with this script.
 
 ## Current Issues/Bugs
 
-### Installing Ruby versions < 3.1 fails on Ubuntu 22.04
-
-Issue [#10][issue-10]. The OpenSSL version in Ubuntu 22.04 is incompatible with any ruby
-below version 3 and causes installation errors. There is a work-around
-[here][issue-10-workaround] which I will shortly add to the script.
+* Pyenv, Rbenv, NVM and Perlbrew are only setup for the `Bash` Shell. If you are
+  using another (eg `Zsh`) you will need to copy over the required setup commmands
+  from the `.bashrc` file to the correct file. I'm looking at auto-detecting the
+  running shell and choosing the correct config however.
 
 ## Usage
 
