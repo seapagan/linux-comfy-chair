@@ -6,7 +6,7 @@
 sudo apt update
 
 # some minimal versions of Ubuntu lack these...
-sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
+sudo apt install -y dialog apt-utils \
                         software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
                         bash-completion cmake pkg-config iputils-ping lsb-release
@@ -38,4 +38,4 @@ echo \
 
 # update then upgrade...
 sudo apt update
-sudo DEBIAN_FRONTEND=noninteractive apt -y full-upgrade
+sudo apt -y full-upgrade
