@@ -40,7 +40,7 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
 pyenv install 2.7.18
-pyenv install 3.10.6
+pyenv install 3.10.7
 # 'python' and 'python3' target 3.10.6 while 'python2' targets 2.7.18
 pyenv global 3.10.6 2.7.18
 # now update 'pip' in both versions ...
