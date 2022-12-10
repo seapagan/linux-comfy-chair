@@ -15,6 +15,9 @@ if [ -z "$debian" ]; then
   exit 1
 fi
 
+# get the 'flavour' of this OS, ie debian,ubuntu etc
+flavour=$(tr '[:upper:]' '[:lower:]' <<< `lsb_release -is`)
+
 # lets see if we are running under WSL (Windows Subsystem for Linux)
 read osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
@@ -57,7 +60,7 @@ fi
 
 # run the individual modules. This will be changed to read from an array of
 # modules..
-. $THISPATH/modules/updates.sh
+. $THISPATH/modules/updates.sh $flavour
 . $THISPATH/modules/packages.sh
 
 # WSL Specific work
