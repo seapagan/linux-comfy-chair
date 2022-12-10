@@ -11,7 +11,7 @@ Raspberry PI system and Windows 10 'WSL', but for pure (Debian Based) Linux.
 Primary usage and testing has been done with Ubuntu though it should now work
 with any Debian-based distribution. Note that the script will only run on
 debian-based distributions (Debian, Ubuntu, Kali, Mint etc etc) as well as
-Raspberry PI variants on those.
+Raspberry PI or WSL variants on those.
 
 **Note that the script is geared towards and tested on _server_ versions more
 than Desktop ones, though it has been used successfully on both**. In fact my
