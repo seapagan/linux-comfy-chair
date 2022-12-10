@@ -17,19 +17,21 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
 
 # add the latest Git repo...
 sudo add-apt-repository ppa:git-core/ppa -y
-
 # add updated php repo ...
 sudo add-apt-repository ppa:ondrej/php -y
-
 # add updated Nginx repo, also contains some useful updated libraries ...
 sudo add-apt-repository ppa:ondrej/nginx -y
 
+# Create the keyring folder if doesn't alredy exist.
+sudo mkdir -p /etc/apt/keyrings
+
 # add Postgresql repo so we can get latest versions if needed...
-curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo sh -c 'echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt  \
+  $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # add the official Docker repo so we can install recent versions if needed...
-sudo mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
