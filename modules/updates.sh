@@ -18,13 +18,24 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
 
 # Add some third-party PPA repos to give us more recent versions of assorted
 # software...
-
-# add the latest Git repo...
-sudo add-apt-repository ppa:git-core/ppa -y
-# add updated php repo ...
-sudo add-apt-repository ppa:ondrej/php -y
-# add updated Nginx repo, also contains some useful updated libraries ...
-sudo add-apt-repository ppa:ondrej/nginx -y
+if [[ $flavour =~ "ubuntu" ]]; then
+  # add the latest Git repo...
+  sudo add-apt-repository ppa:git-core/ppa -y
+  # add updated php repo ...
+  sudo add-apt-repository ppa:ondrej/php -y
+  # add updated Nginx repo, also contains some useful updated libraries ...
+  sudo add-apt-repository ppa:ondrej/nginx -y
+else
+  # debian can't use the Ubuntu PPA's
+  curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+  echo \
+    "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ \
+    $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+  curl -sSLo /usr/share/keyrings/deb.sury.org-nginx.gpg https://packages.sury.org/nginx/apt.gpg
+  echo \
+    "deb [signed-by=/usr/share/keyrings/deb.sury.org-nginx.gpg] https://packages.sury.org/nginx/ \
+    $(lsb_release -sc) main" > /etc/apt/sources.list.d/nginx.list
+fi
 
 # Create the keyring folder if doesn't alredy exist.
 sudo mkdir -p /etc/apt/keyrings
