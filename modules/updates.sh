@@ -27,14 +27,14 @@ if [[ $flavour =~ "ubuntu" ]]; then
   sudo add-apt-repository ppa:ondrej/nginx -y
 else
   # debian can't use the Ubuntu PPA's
-  curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+  sudo curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
   echo \
     "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ \
-    $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
-  curl -sSLo /usr/share/keyrings/deb.sury.org-nginx.gpg https://packages.sury.org/nginx/apt.gpg
+    $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list > /dev/null
+  sudo curl -sSLo /usr/share/keyrings/deb.sury.org-nginx.gpg https://packages.sury.org/nginx/apt.gpg
   echo \
     "deb [signed-by=/usr/share/keyrings/deb.sury.org-nginx.gpg] https://packages.sury.org/nginx/ \
-    $(lsb_release -sc) main" > /etc/apt/sources.list.d/nginx.list
+    $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/nginx.list > /dev/null
 fi
 
 # Create the keyring folder if doesn't alredy exist.
@@ -42,9 +42,9 @@ sudo mkdir -p /etc/apt/keyrings
 
 # add Postgresql repo so we can get latest versions if needed...
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg
-echo \
+sudo echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt  \
-  $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+  $(lsb_release -cs)-pgdg main" ! sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
 
 # add the official Docker repo so we can install recent versions if needed...
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
