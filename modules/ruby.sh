@@ -2,6 +2,12 @@
 # ruby.sh
 # install ruby via the 'rbenv' system and some supporting plugins.
 
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing Ruby 2 & 3.                                      |"
+echo "---------------------------------------------------------------"
+echo ""
+
 export PATH="$HOME/.rbenv/bin:$PATH"
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
 # install dynamic bash extension

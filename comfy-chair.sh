@@ -2,7 +2,7 @@
 # these will run as the default non-privileged user.
 
 # set a version number
-VERSION="1.2.0"
+VERSION="1.3.0"
 
 # ensure that we are not prompted to restart services during the install process
 export DEBIAN_FRONTEND=noninteractive
@@ -26,7 +26,7 @@ else
   os="linux"
 fi
 
-echo "Linux Comfy Chair v $VERSION (c) Grant Ramsay (seapagan@gmail.com)"
+echo "Linux Comfy Chair v$VERSION (c) Grant Ramsay (seapagan@gmail.com)"
 if [ $os = "wsl" ]; then
   echo " - Running under the 'Windows Subsystem for Linux (WSL)"
 fi

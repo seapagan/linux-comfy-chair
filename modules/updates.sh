@@ -10,6 +10,12 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt update
 
 # some minimal versions of Ubuntu lack these...
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing some packages that are often missing, but needed |"
+echo "| for the next step.                                          |"
+echo "---------------------------------------------------------------"
+echo ""
 sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
                         software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
@@ -54,5 +60,10 @@ echo \
 
 
 # update then upgrade...
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Updating all the currently installed Packages.              |"
+echo "---------------------------------------------------------------"
+echo ""
 sudo apt update
 sudo DEBIAN_FRONTEND=noninteractive apt -y full-upgrade

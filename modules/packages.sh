@@ -2,6 +2,12 @@
 # packages.sh
 # make sure we have the required libraries and tools already installed before starting.
 
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing More packages that will be needed later.         |"
+echo "---------------------------------------------------------------"
+echo ""
+
 # now install some important libraries for the next stages...
 sudo DEBIAN_FRONTEND=noninteractive apt install -y build-essential gettext \
                     libssl-dev libreadline-dev zlib1g-dev sqlite3 \

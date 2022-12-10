@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 # docker.sh
 # install docker and docker-compose
+
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing Docker and Compose.                              |"
+echo "---------------------------------------------------------------"
+echo ""
+
 # DONT DO ANY OF THIS IN WSL (Windows Subsystem for Linux)!
 if [ ! $os = "wsl" ]; then
   # docker. We no longer use the old V1 of docker compose, we install v2.
