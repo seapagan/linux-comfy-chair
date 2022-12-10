@@ -2,7 +2,7 @@
 # these will run as the default non-privileged user.
 
 # set a version number
-VERSION="1.2.0"
+VERSION="1.3.0"
 
 # ensure that we are not prompted to restart services during the install process
 export DEBIAN_FRONTEND=noninteractive
@@ -15,6 +15,9 @@ if [ -z "$debian" ]; then
   exit 1
 fi
 
+# get the 'flavour' of this OS, ie debian,ubuntu etc
+flavour=$(tr '[:upper:]' '[:lower:]' <<< `lsb_release -is`)
+
 # lets see if we are running under WSL (Windows Subsystem for Linux)
 read osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
@@ -23,7 +26,7 @@ else
   os="linux"
 fi
 
-echo "Linux Comfy Chair v $VERSION (c) Grant Ramsay (seapagan@gmail.com)"
+echo "Linux Comfy Chair v$VERSION (c) Grant Ramsay (seapagan@gmail.com)"
 if [ $os = "wsl" ]; then
   echo " - Running under the 'Windows Subsystem for Linux (WSL)"
 fi
@@ -57,7 +60,7 @@ fi
 
 # run the individual modules. This will be changed to read from an array of
 # modules..
-. $THISPATH/modules/updates.sh
+. $THISPATH/modules/updates.sh $flavour
 . $THISPATH/modules/packages.sh
 
 # WSL Specific work

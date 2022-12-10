@@ -2,6 +2,12 @@
 # python.sh
 # next install python (both 2.x and 3.x trees) using Pyenv
 # will probably stop installing python2 in the near future as it is EOL.
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing Python 2 & 3.                                    |"
+echo "---------------------------------------------------------------"
+echo ""
+
 
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 # install a couple of plugins...

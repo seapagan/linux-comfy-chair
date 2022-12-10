@@ -3,6 +3,13 @@
 # install the Nginx webbrowser, php7.4-fpm and Postgresql database
 # we already installed all the required ppa's etc in the packages/updates so
 # lets just install
+
+echo ""
+echo "---------------------------------------------------------------"
+echo "| Installing Nginx and Postgresql.                            |"
+echo "---------------------------------------------------------------"
+echo ""
+
 sudo DEBIAN_FRONTEND=noninteractive apt install -y nginx nginx-extras php7.4-fpm postgresql-14
 
 # also install php version 8.1
