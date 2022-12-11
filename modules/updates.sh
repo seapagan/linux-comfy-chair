@@ -50,7 +50,7 @@ sudo mkdir -p /etc/apt/keyrings
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg
 sudo echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt  \
-  $(lsb_release -cs)-pgdg main" ! sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
+  $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
 
 # add the official Docker repo so we can install recent versions if needed...
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
