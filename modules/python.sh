@@ -35,6 +35,7 @@ if ! grep -qc 'pyenv init' ~/.bashrc ; then
   echo "# Set up Pyenv" >> ~/.bashrc
   echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
   echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
   echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
   echo 'eval "$(pyenv init -)"' >> ~/.bashrc
   echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
@@ -52,3 +53,6 @@ pyenv global 3.10.9 2.7.18
 # now update 'pip' in both versions ...
 python2 -m pip install --upgrade pip
 python3 -m pip install --upgrade pip
+
+# Install 'poetry' for packaging and dependency management.
+curl -sSL https://install.python-poetry.org | python3 -
