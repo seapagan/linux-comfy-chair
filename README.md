@@ -25,8 +25,9 @@ This script has been tested on the following systems:
 - [x] Ubuntu Desktop and Server 64-bit, 20.x and up.
 - [x] Debian Bullseye 64-bit minimal network install (so it should work fine on
   the full GUI install)
-- [x] Raspberry PI on Arm64 running Ubuntu 22.04 (Raspian and Base Debian
-  testing is ongoing.)
+- [x] Raspberry PI 3 Arm64 running Ubuntu 22.04
+- [x] Raspberry PI 4 Arm64 running Raspbian Bullseye
+- [x] WSL2 on Windows 10, running Ubuntu or Debian images.
 
 If you have experience (good or bad) running this script on other hardware, cpu
 and Debian-based OS's please get in touch and I will add to the list, or fix the
@@ -79,7 +80,8 @@ this time**, though you can certainly move the relevant sections from the
 
 ## General Information
 
-The script works on a bare newly installed system and provides the following functionality :
+The script works on a bare newly installed system and provides the following
+functionality :
 
 - Updated to the latest package versions from Ubuntu / Debian upstream.
 - Have the `build-essential` package installed plus all required support
