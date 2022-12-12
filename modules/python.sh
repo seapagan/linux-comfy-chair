@@ -43,6 +43,7 @@ fi
 # run the above locally to use in this shell
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
@@ -56,3 +57,8 @@ python3 -m pip install --upgrade pip
 
 # Install 'poetry' for packaging and dependency management.
 curl -sSL https://install.python-poetry.org | python3 -
+
+# Tell poetry to create the venvs in the local project folder not global
+# This is optional, but I find it helps to cut down on the amount of random
+# venvs on your system, and keeps things obviously grouped.
+poetry config virtualenvs.in-project true
