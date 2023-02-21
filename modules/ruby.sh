@@ -74,7 +74,7 @@ echo "configure_opts: $configure_opts"
 
 # install the required ruby version and set as default
 RUBY_CONFIGURE_OPTS=$configure_opts rbenv install 2.7.7
-rbenv install 3.1.3
+rbenv install 3.2.1
 rbenv global 2.7.7
 
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
