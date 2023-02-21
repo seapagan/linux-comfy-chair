@@ -46,11 +46,12 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 pyenv install 2.7.18
-pyenv install 3.10.9
+pyenv install 3.11.2
 # 'python' and 'python3' target 3.10.9 while 'python2' targets 2.7.18
-pyenv global 3.10.9 2.7.18
+pyenv global 3.11.2 2.7.18
 # now update 'pip' in both versions ...
 python2 -m pip install --upgrade pip
 python3 -m pip install --upgrade pip
