@@ -70,17 +70,15 @@ fi
 configure_opts="--with-openssl-dir=${openssl_dir}"
 echo "configure_opts: $configure_opts"
 
-
-
 # install the required ruby version and set as default
-RUBY_CONFIGURE_OPTS=$configure_opts rbenv install 2.7.7
-rbenv install 3.2.1
-rbenv global 2.7.7
+RUBY_CONFIGURE_OPTS=$configure_opts rbenv install 2.7.8
+rbenv install 3.2.2
+rbenv global 2.7.8
 
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
 # These are the 'ri' and 'rdoc' scripts
-rm ~/.rbenv/versions/2.7.7/bin/rdoc
-rm ~/.rbenv/versions/2.7.7/bin/ri
+rm ~/.rbenv/versions/2.7.8/bin/rdoc
+rm ~/.rbenv/versions/2.7.8/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
