@@ -52,6 +52,13 @@ pyenv global 3.11.3 2.7.18
 python2 -m pip install --upgrade pip
 python3 -m pip install --upgrade pip
 
+# add the .local/bin to the path if it isn't already there...
+if ! grep -qc '/.local/bin' ~/.bashrc ; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+fi
+# run the above locally to use in this shell
+export PATH="$HOME/.local/bin:$PATH"
+
 # Install 'poetry' for packaging and dependency management.
 curl -sSL https://install.python-poetry.org | python3 -
 
