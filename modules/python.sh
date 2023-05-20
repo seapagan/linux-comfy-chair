@@ -67,9 +67,8 @@ pipx ensurepath
 
 # add autocompletion for pipx
 if ! grep -qc 'pipx' ~/.bashrc ; then
-  echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
   echo 'eval "$(register-python-argcomplete pipx)' >> ~/.bashrc
 fi
 
 # run the above locally to use in this shell
-eval "$(register-python-argcomplete pipx)
+eval "$(register-python-argcomplete pipx)"
