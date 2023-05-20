@@ -42,7 +42,6 @@ fi
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-export PATH="$HOME/.local/bin:$PATH"
 eval "$(pyenv virtualenv-init -)"
 
 pyenv install 2.7.18
@@ -67,7 +66,7 @@ pipx ensurepath
 
 # add autocompletion for pipx
 if ! grep -qc 'pipx' ~/.bashrc ; then
-  echo 'eval "$(register-python-argcomplete pipx)' >> ~/.bashrc
+  echo 'eval "$(register-python-argcomplete pipx)"' >> ~/.bashrc
 fi
 
 # run the above locally to use in this shell
