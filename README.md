@@ -102,6 +102,8 @@ functionality :
   (all 3 disabled by default). The default php cli version is explicitly set to
   7.4 for the moment however.
 - Install Docker and Docker-compose (disabled by default)
+- Some useful command-line tools like '[z](https://github.com/rupa/z)' and
+  '[fzf](https://github.com/junegunn/fzf)' installed automatically
 
 ## Security
 
