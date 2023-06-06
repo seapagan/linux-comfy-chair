@@ -74,7 +74,10 @@ fi
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
+. $THISPATH/modules/extras.sh
 #. $THISPATH/modules/qemu-kvm.sh
+
+# cleanup after ourselves
 . $THISPATH/modules/cleanup.sh
 
 echo
