@@ -2,7 +2,7 @@
 # these will run as the default non-privileged user.
 
 # set a version number
-VERSION="1.4.2"
+VERSION="1.5.0"
 
 # ensure that we are not prompted to restart services during the install process
 export DEBIAN_FRONTEND=noninteractive

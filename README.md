@@ -93,7 +93,8 @@ functionality :
 - [`Node.js`][node] both the most recent LTS version and latest stable version
   via [`NVM`][nvm]. The LTS version is activated by default.
 - The [`Python`][python] scripting language both the latest 2.7 and 3.x versions
-  via [`Pyenv`][pyenv]
+  via [`Pyenv`][pyenv]. [Poetry](https://python-poetry.org/) and
+  [PipX](https://pypa.github.io/pipx/) are both pre-installed.
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
