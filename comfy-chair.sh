@@ -2,7 +2,7 @@
 # these will run as the default non-privileged user.
 
 # set a version number
-VERSION="1.5.1"
+VERSION="1.6.0"
 
 # ensure that we are not prompted to restart services during the install process
 export DEBIAN_FRONTEND=noninteractive
@@ -68,14 +68,13 @@ if [ $os = "wsl" ]; then
   . $THISPATH/modules/wsl.sh
 fi
 
-# . $THISPATH/modules/nginx-php-pgsql.sh
-# . $THISPATH/modules/docker.sh
+#. $THISPATH/modules/nginx-php-pgsql.sh
+. $THISPATH/modules/docker.sh
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
 . $THISPATH/modules/extras.sh
-#. $THISPATH/modules/qemu-kvm.sh
 
 # cleanup after ourselves
 . $THISPATH/modules/cleanup.sh

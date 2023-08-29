@@ -27,7 +27,7 @@ This script has been tested on the following systems:
   the full GUI install)
 - [x] Raspberry PI 3 Arm64 running Ubuntu 22.04
 - [x] Raspberry PI 4 Arm64 running Raspbian Bullseye
-- [x] WSL2 on Windows 10, running Ubuntu or Debian images.
+- [x] WSL2 on Windows 10 & 11, running Ubuntu or Debian images.
 
 If you have experience (good or bad) running this script on other hardware, cpu
 and Debian-based OS's please get in touch and I will add to the list, or fix the
@@ -92,7 +92,7 @@ functionality :
   the current Rails version and several other common gems.
 - [`Node.js`][node] both the most recent LTS version and latest stable version
   via [`NVM`][nvm]. The LTS version is activated by default.
-- The [`Python`][python] scripting language both the latest 2.7 and 3.x versions
+- The [`Python`][python] scripting language, latest 3.x version
   via [`Pyenv`][pyenv]. [Poetry](https://python-poetry.org/) and
   [PipX](https://pypa.github.io/pipx/) are both pre-installed.
 - Install the latest STABLE [`Perl`][perl] scripting language via
@@ -102,7 +102,7 @@ functionality :
 - Install Nginx web server(Latest), PHP(v7.4 & 8.1) and Postgresql database(v14)
   (all 3 disabled by default). The default php cli version is explicitly set to
   7.4 for the moment however.
-- Install Docker and Docker-compose (disabled by default)
+- Install Docker and Docker-compose (unless on WSL2)
 - Some useful command-line tools like '[z](https://github.com/rupa/z)' and
   '[fzf](https://github.com/junegunn/fzf)' installed automatically
 

@@ -4,9 +4,8 @@
 # system ...we install a meta-package for Ubuntu after first checking we are
 # definately using Ubuntu.
 
-
-
 distro=`cat /etc/*-release | grep DISTRIB_ID | awk -F= '{print $2}'`
+
 if [ "$distro" == "Ubuntu" ]; then
   echo ""
   echo "---------------------------------------------------------------"
