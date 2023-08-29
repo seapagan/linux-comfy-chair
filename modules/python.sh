@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# python.sh
-# next install python (both 2.x and 3.x trees) using Pyenv
-# will probably stop installing python2 in the near future as it is EOL.
+# python.sh Install the latest version of Python 3 using 'Pyenv'. Also install
+# 'Poetry' for dependency management and 'pipx' for managing global python
+# packages. Python 2 is no longer installed by
+# default, but can be installed using 'pyenv' if needed.
 echo ""
 echo "---------------------------------------------------------------"
-echo "| Installing Python 2 & 3.                                    |"
+echo "| Installing Python 3, Poetry and PipX.                       |"
 echo "---------------------------------------------------------------"
 echo ""
 
@@ -15,8 +16,10 @@ git clone https://github.com/yyuu/pyenv-pip-migrate.git ~/.pyenv/plugins/pyenv-p
 git clone https://github.com/yyuu/pyenv-ccache.git ~/.pyenv/plugins/pyenv-ccache
 git clone https://github.com/jawshooah/pyenv-default-packages.git ~/.pyenv/plugins/pyenv-default-packages
 
-# set up a default-packages file for python libraries to install with each new python or venv ...
-# for now, just a few that allow my vscode settings to work easier.
+# Set up a default-packages file for python libraries to install with each new
+# python or venv ... for now, just a few that allow my vscode settings to work
+# easier. Will probably deprecate this later, as I now use 'Poetry' for
+# dependency management.
 cat <<- EOF > ~/.pyenv/default-packages
 wheel
 pylint
@@ -27,7 +30,6 @@ pep8-naming
 pydocstyle
 ipython
 EOF
-
 
 if ! grep -qc 'pyenv init' ~/.bashrc ; then
   echo "## Adding pyenv to .bashrc ##"
@@ -44,12 +46,9 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 2.7.18
-pyenv install 3.11.3
-# 'python' and 'python3' target 3.11.3 while 'python2' targets 2.7.18
-pyenv global 3.11.3 2.7.18
-# now update 'pip' in both versions ...
-python2 -m pip install --upgrade pip
+pyenv install 3.11.5
+pyenv global 3.11.5
+# now update 'pip' to the latest version ...
 python3 -m pip install --upgrade pip
 
 # add the .local/bin to the path if it isn't already there...
