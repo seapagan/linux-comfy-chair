@@ -4,7 +4,7 @@
 
 echo ""
 echo "---------------------------------------------------------------"
-echo "| Installing Ruby 2 & 3.                                      |"
+echo "| Installing Ruby 3.                                          |"
 echo "---------------------------------------------------------------"
 echo ""
 
@@ -40,45 +40,14 @@ echo $'bundler\nsassc\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-gems
 # set up .gemrc to avoid installing documentation for each gem...
 echo "gem: --no-document" > ~/.gemrc
 
-# check the version of OpenSSL installed.
-if [[ $openssl_ver =~ "1.1.1" ]]; then
-  echo "OpenSSL Version is good to use."
-  openssl_dir="/usr/lib/ssl"
-else
-  echo "we need to install openssl 1.1.1"
-  our_dir=$(pwd)
-  # get a temporary directory to download openssl
-  tmpdir=$(mktemp -d)
-  cd $tmpdir
-  # get the openssl source
-  wget https://www.openssl.org/source/openssl-1.1.1o.tar.gz
-  tar xf openssl-1.1.1o.tar.gz
-  # build and install openssl
-  cd openssl-1.1.1o
-  ./config --prefix=/opt/openssl-1.1.1o --openssldir=/opt/openssl-1.1.1o shared zlib
-  make
-  make test
-  sudo make install
-  # link the system certs to openssl-1.1.1o
-  sudo rm -rf /opt/openssl-1.1.1o/certs
-  sudo ln -s /etc/ssl/certs /opt/openssl-1.1.1o
-  # set the configure options for Ruby
-  openssl_dir="/opt/openssl-1.1.1o"
-  cd $our_dir
-fi
-
-configure_opts="--with-openssl-dir=${openssl_dir}"
-echo "configure_opts: $configure_opts"
-
-# install the required ruby version and set as default
-RUBY_CONFIGURE_OPTS=$configure_opts rbenv install 2.7.8
+# install the latest ruby version and set as default
 rbenv install 3.2.2
-rbenv global 2.7.8
 
-# we need to erase 2 files temporarily (they will be regenerated) otherwise the installation will pause for overwrite confirmation
-# These are the 'ri' and 'rdoc' scripts
-rm ~/.rbenv/versions/2.7.8/bin/rdoc
-rm ~/.rbenv/versions/2.7.8/bin/ri
+# we need to erase 2 files temporarily (they will be regenerated) otherwise the
+# installation will pause for overwrite confirmation These are the 'ri' and
+# 'rdoc' scripts
+rm ~/.rbenv/versions/3.2.2/bin/rdoc
+rm ~/.rbenv/versions/3.2.2/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
