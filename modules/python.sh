@@ -22,12 +22,7 @@ git clone https://github.com/jawshooah/pyenv-default-packages.git ~/.pyenv/plugi
 # dependency management.
 cat <<- EOF > ~/.pyenv/default-packages
 wheel
-pylint
-black
-flake8
-flake8-docstrings
-pep8-naming
-pydocstyle
+ruff
 ipython
 EOF
 
@@ -46,8 +41,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.11.5
-pyenv global 3.11.5
+pyenv install 3.11.8
+pyenv global 3.11.8
 # now update 'pip' to the latest version ...
 python3 -m pip install --upgrade pip
 
