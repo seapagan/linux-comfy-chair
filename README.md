@@ -95,16 +95,20 @@ functionality :
 - The [`Python`][python] scripting language, latest 3.x version
   via [`Pyenv`][pyenv]. [Poetry](https://python-poetry.org/) and
   [PipX](https://pypa.github.io/pipx/) are both pre-installed.
+- The latest version of [`Rust`](https://www.rust-lang.org/) via `rustup`.
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
 - Enable resolution of WINS hostnames
-- Install Nginx web server(Latest), PHP(v7.4 & 8.1) and Postgresql database(v14)
-  (all 3 disabled by default). The default php cli version is explicitly set to
-  7.4 for the moment however.
+- [`DISABLED BY DEFAULT`] Install Nginx web server(Latest), PHP(v7.4 & 8.1) and
+  Postgresql database(v14). The default php cli version is explicitly set to 7.4
+  for the moment however.
 - Install Docker and Docker-compose (unless on WSL2)
 - Some useful command-line tools like '[z](https://github.com/rupa/z)' and
   '[fzf](https://github.com/junegunn/fzf)' installed automatically
+
+You can enable or disable each module by commenting out the relevant section in
+the `comfy-chair.sh` script.
 
 ## Security
 
@@ -131,7 +135,7 @@ From the terminal run the following commands:
 
 ```bash
 git clone https://github.com/seapagan/linux-comfy-chair.git
-cd ubuntu-win-bootstrap
+cd linux-comfy-chair
 ./comfy-chair.sh
 ```
 
