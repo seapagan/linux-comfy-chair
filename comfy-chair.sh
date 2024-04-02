@@ -45,7 +45,7 @@ if [ ! $(which git) ] || [ ! $(which sudo) ]; then
 fi
 
 # if this is a minimized system (eg ex Docker container) then the 'man' command
-# will be diverrted to a stub. Lets set this back to the real Binary
+# will be diverted to a stub. Lets set this back to the real Binary
 # Note : Without this the Perl installation will FAIL tests.
 if  [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
     # Remove diverted man binary
@@ -68,13 +68,20 @@ if [ $os = "wsl" ]; then
   . $THISPATH/modules/wsl.sh
 fi
 
-#. $THISPATH/modules/nginx-php-pgsql.sh
+# ---------------------------------------------------------------------------- #
+#             comment out the modules below you do not want to run             #
+# ---------------------------------------------------------------------------- #
+# . $THISPATH/modules/nginx-php-pgsql.sh
 . $THISPATH/modules/docker.sh
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
+. $THISPATH/modules/rust.sh
 . $THISPATH/modules/extras.sh
+# ---------------------------------------------------------------------------- #
+#                                end of modules                                #
+# ---------------------------------------------------------------------------- #
 
 # cleanup after ourselves
 . $THISPATH/modules/cleanup.sh
