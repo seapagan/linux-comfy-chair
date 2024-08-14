@@ -15,7 +15,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y build-essential gettext \
                     libffi-dev libpq-dev mcrypt liblzma-dev lzma \
                     libncurses5-dev xz-utils libxmlsec1-dev tk-dev llvm \
                     libicu-dev libcurl4-openssl-dev checkinstall libyaml-dev \
-                    terminator
+                    terminator lld
 
 # install some 'nice to have' that are missing from very mininal images...
 sudo DEBIAN_FRONTEND=noninteractive apt install -y nano htop openssh-server openssh-client

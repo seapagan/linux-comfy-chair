@@ -41,13 +41,13 @@ echo $'bundler\nsassc\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-gems
 echo "gem: --no-document" > ~/.gemrc
 
 # install the latest ruby version and set as default
-rbenv install 3.3.0
-rbenv global 3.3.0
+rbenv install 3.340
+rbenv global 3.3.4
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the
 # installation will pause for overwrite confirmation These are the 'ri' and
 # 'rdoc' scripts
-rm ~/.rbenv/versions/3.3.0/bin/rdoc
-rm ~/.rbenv/versions/3.3.0/bin/ri
+rm ~/.rbenv/versions/3.3.4/bin/rdoc
+rm ~/.rbenv/versions/3.3.4/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update

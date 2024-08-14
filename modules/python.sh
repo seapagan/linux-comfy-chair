@@ -41,8 +41,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.11.8
-pyenv global 3.11.8
+pyenv install 3.12
+pyenv global 3.12
 # now update 'pip' to the latest version ...
 python3 -m pip install --upgrade pip
 
