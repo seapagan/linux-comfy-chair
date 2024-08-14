@@ -16,3 +16,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 rustup component add clippy
 rustup component add rustfmt
 
+cargo install bob-nvim # neovim version manager
+
+
