@@ -72,12 +72,12 @@ fi
 #             comment out the modules below you do not want to run             #
 # ---------------------------------------------------------------------------- #
 # . $THISPATH/modules/nginx-php-pgsql.sh
+. $THISPATH/modules/rust.sh
 . $THISPATH/modules/docker.sh
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
 . $THISPATH/modules/perl.sh
-. $THISPATH/modules/rust.sh
 . $THISPATH/modules/extras.sh
 # ---------------------------------------------------------------------------- #
 #                                end of modules                                #

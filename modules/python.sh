@@ -70,5 +70,9 @@ if ! grep -qc 'pipx' ~/.bashrc ; then
   echo 'eval "$(register-python-argcomplete pipx)"' >> ~/.bashrc
 fi
 
+# install 'uv' for python project and version management/ This can also replace
+# 'pipx' but we'll keep both available for now.
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # run the above locally to use in this shell
 eval "$(register-python-argcomplete pipx)"
