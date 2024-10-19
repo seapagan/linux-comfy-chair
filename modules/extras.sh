@@ -2,14 +2,12 @@
 # extras.sh
 # extra additions not in the main install script
 
-# install 'z' tool (https://github.com/rupa/z)
-\curl https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/z.sh
-chmod +x ~/z.sh
-# set up the z tool in the shell
-if ! grep -qc 'z.sh' ~/.bashrc ; then
+# install 'zoxide' tool (this is a faster 'z' tool)
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+if ! grep -qc 'zoxide init' ~/.bashrc ; then
   echo >> ~/.bashrc
-  echo "# Set up 'z' (jump around)" >> ~/.bashrc
-  echo '. ~/z.sh' >> ~/.bashrc
+  echo "# Set up 'zoxide' (jump around)" >> ~/.bashrc
+  echo 'eval "$(zoxide init bash)"' >> ~/.bashrc
 fi
 
 # install 'fzf' tool (fuzzy finder)
@@ -44,3 +42,10 @@ curl -Lo fd.deb "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/
 sudo dpkg -i fd.deb
 rm ./fd.deb
 
+# install 'direnv' tool (environment switcher)
+curl -sfL https://direnv.net/install.sh | bash
+if ! grep -qc 'direnv hook bash' ~/.bashrc ; then
+  echo >> ~/.bashrc
+  echo "# Set up 'direnv' (environment switcher)" >> ~/.bashrc
+  echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+fi
