@@ -9,3 +9,6 @@ License.sublime_license
 .agents/
 AGENTS.md
 CLAUDE.md
+
+# local Docker test logs
+logs/
