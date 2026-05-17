@@ -94,19 +94,26 @@ functionality :
 - [`Node.js`][node] both the most recent LTS version and latest stable version
   via [`NVM`][nvm]. The LTS version is activated by default.
 - The [`Python`][python] scripting language, latest 3.x version
-  via [`Pyenv`][pyenv]. [Poetry](https://python-poetry.org/) and
-  [PipX](https://pypa.github.io/pipx/) are both pre-installed.
+  via [`Pyenv`][pyenv]. [uv](https://docs.astral.sh/uv/),
+  [Poetry](https://python-poetry.org/) and [PipX](https://pypa.github.io/pipx/)
+  are all pre-installed.
 - The latest version of [`Rust`](https://www.rust-lang.org/) via `rustup`.
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
 - Enable resolution of WINS hostnames
-- [`DISABLED BY DEFAULT`] Install Nginx web server(Latest), PHP(v7.4 & 8.1) and
-  Postgresql database(v14). The default php cli version is explicitly set to 7.4
-  for the moment however.
+- [`DISABLED BY DEFAULT`] Install the latest Nginx web server, PHP 8.5 FPM, CLI,
+  common PHP extensions, and PostgreSQL 18.
 - Install Docker and Docker-compose (unless on WSL2)
-- Some useful command-line tools like '[z](https://github.com/rupa/z)' and
-  '[fzf](https://github.com/junegunn/fzf)' installed automatically
+- Some useful command-line tools are installed automatically, including
+  [zoxide](https://github.com/ajeetdsouza/zoxide),
+  [fzf](https://github.com/junegunn/fzf),
+  [lazygit](https://github.com/jesseduffield/lazygit),
+  [lazydocker](https://github.com/jesseduffield/lazydocker),
+  [bat](https://github.com/sharkdp/bat),
+  [ripgrep](https://github.com/BurntSushi/ripgrep),
+  [fd](https://github.com/sharkdp/fd), and
+  [direnv](https://direnv.net/).
 
 You can enable or disable each module by commenting out the relevant section in
 the `comfy-chair.sh` script.
