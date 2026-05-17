@@ -28,13 +28,16 @@ docker build \
 echo "Starting disposable Ubuntu test container. Exit the shell to remove it."
 set +e
 if [ -n "$log_file" ]; then
+  raw_log="$script_dir/$log_file.raw"
   docker run \
     --rm \
     --interactive \
     --tty \
     --mount "type=bind,src=${script_dir},target=/home/comfy/comfy-chair" \
-    "$image_name" 2>&1 | tee "$script_dir/$log_file"
+    "$image_name" 2>&1 | tee "$raw_log"
   status=${PIPESTATUS[0]}
+  perl -MTerm::ANSIColor=colorstrip -pe '$_ = colorstrip($_); s/\e\[[0-?]*[ -\/]*[@-~]//g; s/\e\][^\a]*(?:\a|\e\\)//g; s/\e[ -\/]*[0-~]//g; 1 while s/[^\n]\x08//g; s/\r//g; s/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' "$raw_log" > "$script_dir/$log_file"
+  rm -f "$raw_log"
 else
   docker run \
     --rm \
