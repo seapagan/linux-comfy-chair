@@ -10,7 +10,7 @@ echo ""
 
 # copy a basic .gitconfig if we have it...
 if [ -f "$THISPATH/support/.gitconfig" ] ; then
-  cat $THISPATH/support/.gitconfig >> ~/.gitconfig
+  cat "$THISPATH/support/.gitconfig" >> ~/.gitconfig
 fi
 
 # add the .local/bin to the path if it isn't already there...

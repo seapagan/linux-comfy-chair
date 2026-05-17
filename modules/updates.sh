@@ -38,7 +38,7 @@ else
 fi
 
 # Add a custom nginx repo with more functionality than the base distro
-curl -sSL https://n.wtf/public.key | sudo gpg --dearmor > /usr/share/keyrings/n.wtf.gpg
+curl -sSL https://n.wtf/public.key | sudo gpg --dearmor -o /usr/share/keyrings/n.wtf.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/n.wtf.gpg] https://mirror-cdn.xtom.com/sb/nginx/ \
   $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/n.wtf.list > /dev/null
@@ -53,7 +53,7 @@ sudo echo \
   $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
 
 # add the official Docker repo so we can install recent versions if needed...
-curl -fsSL https://download.docker.com/linux/$flavour/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/"$flavour"/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$flavour \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
