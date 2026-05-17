@@ -95,7 +95,7 @@ fi
 # ---------------------------------------------------------------------------- #
 #             comment out the modules below you do not want to run             #
 # ---------------------------------------------------------------------------- #
-# . $THISPATH/modules/nginx-php-pgsql.sh
+# . "$THISPATH/modules/nginx-php-pgsql.sh"
 . "$THISPATH/modules/rust.sh"
 if [ "$running_in_container" = "yes" ]; then
   echo "Skipping Docker install inside a container."
