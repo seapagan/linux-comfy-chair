@@ -9,11 +9,11 @@ echo "---------------------------------------------------------------"
 echo ""
 
 \curl -L https://install.perlbrew.pl | bash
-if ! grep -qc '~/perl5/perlbrew/etc/bashrc' ~/.bashrc ; then
-  echo "## Adding Perlbrew to .bashrc ##"
-  echo >> ~/.bashrc
-  echo "# Set up Perlbrew" >> ~/.bashrc
-  echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc
+if ! grep -qc '~/perl5/perlbrew/etc/bashrc' "$shell_rc" ; then
+  echo "## Adding Perlbrew to $shell_rc ##"
+  echo >> "$shell_rc"
+  echo "# Set up Perlbrew" >> "$shell_rc"
+  echo "source ~/perl5/perlbrew/etc/bashrc" >> "$shell_rc"
 fi
 # source perlbrew setup so we can use in this shell...
 source ~/perl5/perlbrew/etc/bashrc

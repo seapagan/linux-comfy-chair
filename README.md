@@ -68,15 +68,16 @@ I have moved away from using WSL, as I have migrated to Linux full-time for my
 development and day-to-day machine, however, I will try to test on WSL and fix
 any errors for each official release.
 
-## Note 2: Currently only for `bash` shell
+## Note 2: Currently only for `bash` and `zsh` shells
 
-The script writes configuration settings to .bashrc, which will mean lack of
-functionality under `Zsh` and others. I now use Zsh myself almost exclusively,
-so this will likely be fixed in future releases.
+The installer uses Bash and expects Bash to be present on the system, which is
+the default on Debian-based distributions. It detects the login shell from
+`$SHELL` and writes configuration to `.bashrc` or `.zshrc`. Other login shells
+are not currently supported.
 
-As a result, under Zsh and others the Pyenv/Rbenv/NVM etc **will not work at
-this time**, though you can certainly move the relevant sections from the
-`.bashrc` to the `.zshrc`
+As a result, under shells other than Bash or Zsh the Pyenv/Rbenv/NVM etc **will
+not work at this time**, though you can certainly move the relevant sections
+from `.bashrc` or `.zshrc` to the correct file for your shell.
 
 ## General Information
 
@@ -93,19 +94,26 @@ functionality :
 - [`Node.js`][node] both the most recent LTS version and latest stable version
   via [`NVM`][nvm]. The LTS version is activated by default.
 - The [`Python`][python] scripting language, latest 3.x version
-  via [`Pyenv`][pyenv]. [Poetry](https://python-poetry.org/) and
-  [PipX](https://pypa.github.io/pipx/) are both pre-installed.
+  via [`Pyenv`][pyenv]. [uv](https://docs.astral.sh/uv/),
+  [Poetry](https://python-poetry.org/) and [PipX](https://pypa.github.io/pipx/)
+  are all pre-installed.
 - The latest version of [`Rust`](https://www.rust-lang.org/) via `rustup`.
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
   Several PERL modules that make cpan easier are also pre-installed
 - Enable resolution of WINS hostnames
-- [`DISABLED BY DEFAULT`] Install Nginx web server(Latest), PHP(v7.4 & 8.1) and
-  Postgresql database(v14). The default php cli version is explicitly set to 7.4
-  for the moment however.
+- [`DISABLED BY DEFAULT`] Install the latest Nginx web server, PHP 8.5 FPM, CLI,
+  common PHP extensions, and PostgreSQL 18.
 - Install Docker and Docker-compose (unless on WSL2)
-- Some useful command-line tools like '[z](https://github.com/rupa/z)' and
-  '[fzf](https://github.com/junegunn/fzf)' installed automatically
+- Some useful command-line tools are installed automatically, including
+  [zoxide](https://github.com/ajeetdsouza/zoxide),
+  [fzf](https://github.com/junegunn/fzf),
+  [lazygit](https://github.com/jesseduffield/lazygit),
+  [lazydocker](https://github.com/jesseduffield/lazydocker),
+  [bat](https://github.com/sharkdp/bat),
+  [ripgrep](https://github.com/BurntSushi/ripgrep),
+  [fd](https://github.com/sharkdp/fd), and
+  [direnv](https://direnv.net/).
 
 You can enable or disable each module by commenting out the relevant section in
 the `comfy-chair.sh` script.
@@ -121,10 +129,8 @@ with this script.
 
 ## Current Issues/Bugs
 
-- Pyenv, Rbenv, NVM and Perlbrew are only setup for the `Bash` Shell. If you are
-  using another (eg `Zsh`) you will need to copy over the required setup commmands
-  from the `.bashrc` file to the correct file. I'm looking at auto-detecting the
-  running shell and choosing the correct config however.
+- Shell startup configuration is currently generated for Bash and Zsh only.
+  Other shells need manual setup.
 
 ## Usage
 

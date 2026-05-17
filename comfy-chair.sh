@@ -18,6 +18,21 @@ fi
 # get the 'flavour' of this OS, ie debian,ubuntu etc
 flavour=$(tr '[:upper:]' '[:lower:]' <<< `lsb_release -is`)
 
+# detect the user's shell and choose the matching startup file
+shell_type=$(basename "$SHELL")
+case "$shell_type" in
+  bash)
+    shell_rc="$HOME/.bashrc"
+    ;;
+  zsh)
+    shell_rc="$HOME/.zshrc"
+    ;;
+  *)
+    echo "Unsupported shell: $shell_type. Supported shells: bash, zsh."
+    exit 1
+    ;;
+esac
+
 # lets see if we are running under WSL (Windows Subsystem for Linux)
 read osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then

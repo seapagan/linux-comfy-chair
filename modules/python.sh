@@ -28,14 +28,14 @@ ruff
 ipython
 EOF
 
-if ! grep -qc 'pyenv init' ~/.bashrc ; then
-  echo "## Adding pyenv to .bashrc ##"
-  echo >> ~/.bashrc
-  echo "# Set up Pyenv" >> ~/.bashrc
-  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-  echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-  echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-  echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+if ! grep -qc 'pyenv init' "$shell_rc" ; then
+  echo "## Adding pyenv to $shell_rc ##"
+  echo >> "$shell_rc"
+  echo "# Set up Pyenv" >> "$shell_rc"
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> "$shell_rc"
+  echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> "$shell_rc"
+  echo "eval \"\$(pyenv init - $shell_type)\"" >> "$shell_rc"
+  echo 'eval "$(pyenv virtualenv-init -)"' >> "$shell_rc"
 fi
 # run the above locally to use in this shell
 export PYENV_ROOT="$HOME/.pyenv"
@@ -49,8 +49,8 @@ pyenv global 3.14
 python3 -m pip install --upgrade pip
 
 # add the .local/bin to the path if it isn't already there...
-if ! grep -qc '/.local/bin' ~/.bashrc ; then
-  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+if ! grep -qc '/.local/bin' "$shell_rc" ; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
 fi
 # run the above locally to use in this shell
 export PATH="$HOME/.local/bin:$PATH"
@@ -68,8 +68,8 @@ python3 -m pip install --user pipx
 pipx ensurepath
 
 # add autocompletion for pipx
-if ! grep -qc 'pipx' ~/.bashrc ; then
-  echo 'eval "$(register-python-argcomplete pipx)"' >> ~/.bashrc
+if ! grep -qc 'pipx' "$shell_rc" ; then
+  echo 'eval "$(register-python-argcomplete pipx)"' >> "$shell_rc"
 fi
 
 # run the above locally to use in this shell

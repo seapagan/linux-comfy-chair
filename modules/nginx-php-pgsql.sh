@@ -10,7 +10,7 @@ echo "| Installing Nginx and Postgresql.                            |"
 echo "---------------------------------------------------------------"
 echo ""
 
-sudo DEBIAN_FRONTEND=noninteractive apt install -y nginx nginx-extras php8.5-fpm
+sudo DEBIAN_FRONTEND=noninteractive apt install -y nginx nginx-extras php8.5-fpm postgresql-18
 
 # install php version 8.1
 sudo DEBIAN_FRONTEND=noninteractive apt install -y php8.5 php8.5-cli
