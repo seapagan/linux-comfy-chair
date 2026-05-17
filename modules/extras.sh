@@ -7,10 +7,10 @@ ARCH=$(dpkg --print-architecture)
 
 # install 'zoxide' tool (this is a faster 'z' tool)
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-if ! grep -qc 'zoxide init' ~/.bashrc ; then
-  echo >> ~/.bashrc
-  echo "# Set up 'zoxide' (jump around)" >> ~/.bashrc
-  echo 'eval "$(zoxide init bash)"' >> ~/.bashrc
+if ! grep -qc 'zoxide init' "$shell_rc" ; then
+  echo >> "$shell_rc"
+  echo "# Set up 'zoxide' (jump around)" >> "$shell_rc"
+  echo "eval \"\$(zoxide init $shell_type)\"" >> "$shell_rc"
 fi
 
 # install 'fzf' tool (fuzzy finder)
@@ -47,8 +47,8 @@ rm ./fd.deb
 
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh | bash
-if ! grep -qc 'direnv hook bash' ~/.bashrc ; then
-  echo >> ~/.bashrc
-  echo "# Set up 'direnv' (environment switcher)" >> ~/.bashrc
-  echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+if ! grep -qc 'direnv hook' "$shell_rc" ; then
+  echo >> "$shell_rc"
+  echo "# Set up 'direnv' (environment switcher)" >> "$shell_rc"
+  echo "eval \"\$(direnv hook $shell_type)\"" >> "$shell_rc"
 fi

@@ -68,15 +68,16 @@ I have moved away from using WSL, as I have migrated to Linux full-time for my
 development and day-to-day machine, however, I will try to test on WSL and fix
 any errors for each official release.
 
-## Note 2: Currently only for `bash` shell
+## Note 2: Currently only for `bash` and `zsh` shells
 
-The script writes configuration settings to .bashrc, which will mean lack of
-functionality under `Zsh` and others. I now use Zsh myself almost exclusively,
-so this will likely be fixed in future releases.
+The installer uses Bash and expects Bash to be present on the system, which is
+the default on Debian-based distributions. It detects the login shell from
+`$SHELL` and writes configuration to `.bashrc` or `.zshrc`. Other login shells
+are not currently supported.
 
-As a result, under Zsh and others the Pyenv/Rbenv/NVM etc **will not work at
-this time**, though you can certainly move the relevant sections from the
-`.bashrc` to the `.zshrc`
+As a result, under shells other than Bash or Zsh the Pyenv/Rbenv/NVM etc **will
+not work at this time**, though you can certainly move the relevant sections
+from `.bashrc` or `.zshrc` to the correct file for your shell.
 
 ## General Information
 
@@ -121,10 +122,8 @@ with this script.
 
 ## Current Issues/Bugs
 
-- Pyenv, Rbenv, NVM and Perlbrew are only setup for the `Bash` Shell. If you are
-  using another (eg `Zsh`) you will need to copy over the required setup commmands
-  from the `.bashrc` file to the correct file. I'm looking at auto-detecting the
-  running shell and choosing the correct config however.
+- Shell startup configuration is currently generated for Bash and Zsh only.
+  Other shells need manual setup.
 
 ## Usage
 
