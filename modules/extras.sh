@@ -45,6 +45,14 @@ curl -Lo fd.deb "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/
 sudo dpkg -i fd.deb
 rm ./fd.deb
 
+# ensure we can find nvim if installed by bob:
+if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
+  echo >> "$shell_rc"
+  echo "# so we can find nvim" >> "$shell_rc"
+  echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"' >> "$shell_rc"
+fi
+
+
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh | bash
 if ! grep -qc 'direnv hook' "$shell_rc" ; then

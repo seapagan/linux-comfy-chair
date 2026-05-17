@@ -145,6 +145,26 @@ cd linux-comfy-chair
 ./comfy-chair.sh
 ```
 
+### Local Docker test shell
+
+For local testing without modifying your host system, you can start an
+ephemeral Ubuntu 24.04 container:
+
+```bash
+./docker-shell.sh
+```
+
+The helper builds a local test image, starts a fresh container, mounts this
+repository at `~/comfy-chair`, and asks whether to log in with Bash or Zsh. The
+container user is created with your host UID and GID, so the bind-mounted
+working tree remains writable. The container is removed when you exit, so
+installed packages and system changes do not persist.
+
+When `./comfy-chair.sh` runs inside ANY container, it skips the Docker install
+module to avoid trying to install Docker inside Docker.
+
+Obviously, you need to have `Docker` installed already on your local machine.
+
 ### Default branch has been renamed
 
 In line with many Open-Source projects, I have renamed the Default branch from
