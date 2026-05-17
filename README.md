@@ -154,6 +154,12 @@ ephemeral Ubuntu 24.04 container:
 ./docker-shell.sh
 ```
 
+To record the full container terminal session to `logs/`, run:
+
+```bash
+./docker-shell.sh --log
+```
+
 The helper builds a local test image, starts a fresh container, mounts this
 repository at `~/comfy-chair`, and asks whether to log in with Bash or Zsh. The
 container user is created with your host UID and GID, so the bind-mounted
