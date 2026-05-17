@@ -41,9 +41,9 @@ fi
 curl -sSL https://n.wtf/public.key | sudo gpg --dearmor > /usr/share/keyrings/n.wtf.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/n.wtf.gpg] https://mirror-cdn.xtom.com/sb/nginx/ \
-  $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/n.wtf.list' > /dev/null
+  $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/n.wtf.list > /dev/null
 
-# Create the keyring folder if doesn't alredy exist.
+# Create the keyring folder if doesn't already exist.
 sudo mkdir -p /etc/apt/keyrings
 
 # add Postgresql repo so we can get latest versions if needed...

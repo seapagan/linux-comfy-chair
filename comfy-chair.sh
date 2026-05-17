@@ -41,9 +41,18 @@ else
   os="linux"
 fi
 
+if [ -f /.dockerenv ] || grep -qaE '(docker|containerd|kubepods)' /proc/1/cgroup 2>/dev/null; then
+  running_in_container="yes"
+else
+  running_in_container="no"
+fi
+
 echo "Linux Comfy Chair v$VERSION (c) Grant Ramsay (seapagan@gmail.com)"
 if [ $os = "wsl" ]; then
   echo " - Running under the 'Windows Subsystem for Linux (WSL)"
+fi
+if [ "$running_in_container" = "yes" ]; then
+  echo " - Running inside a container"
 fi
 
 # save the path to this script for later use
@@ -88,7 +97,11 @@ fi
 # ---------------------------------------------------------------------------- #
 # . $THISPATH/modules/nginx-php-pgsql.sh
 . $THISPATH/modules/rust.sh
-. $THISPATH/modules/docker.sh
+if [ "$running_in_container" = "yes" ]; then
+  echo "Skipping Docker install inside a container."
+else
+  . $THISPATH/modules/docker.sh
+fi
 . $THISPATH/modules/ruby.sh
 . $THISPATH/modules/node.sh
 . $THISPATH/modules/python.sh
@@ -102,4 +115,5 @@ fi
 . $THISPATH/modules/cleanup.sh
 
 echo
-echo "You now need to reboot this system for all the new changes to take affect."
+echo "You now need to reboot this system for all the new changes to take " \
+  "effect, or at least re-exec your shell (eg 'exec \$SHELL') to use the tools."
