@@ -29,19 +29,19 @@ if [[ $flavour =~ "ubuntu" ]]; then
   sudo add-apt-repository ppa:git-core/ppa -y
   # add updated php repo ...
   sudo add-apt-repository ppa:ondrej/php -y
-  # add updated Nginx repo, also contains some useful updated libraries ...
-  sudo add-apt-repository ppa:ondrej/nginx -y
 else
   # debian can't use the Ubuntu PPA's
   sudo curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
   echo \
     "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ \
     $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list > /dev/null
-  sudo curl -sSLo /usr/share/keyrings/deb.sury.org-nginx.gpg https://packages.sury.org/nginx/apt.gpg
-  echo \
-    "deb [signed-by=/usr/share/keyrings/deb.sury.org-nginx.gpg] https://packages.sury.org/nginx/ \
-    $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/nginx.list > /dev/null
 fi
+
+# Add a custom nginx repo with more functionality than the base distro
+curl -sSL https://n.wtf/public.key | sudo gpg --dearmor > /usr/share/keyrings/n.wtf.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/n.wtf.gpg] https://mirror-cdn.xtom.com/sb/nginx/ \
+  $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/n.wtf.list' > /dev/null
 
 # Create the keyring folder if doesn't alredy exist.
 sudo mkdir -p /etc/apt/keyrings
@@ -59,7 +59,7 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # add the GitHub CLI repo so we can install recent versions if needed...
-wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null 
+wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
 sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
