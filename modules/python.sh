@@ -78,7 +78,11 @@ eval "$(register-python-argcomplete pipx)"
 # install 'uv' for python project and version management (replaces poetry). This
 # can also replace 'pipx' but we'll keep both available for now.
 curl -LsSf https://astral.sh/uv/install.sh | sh
-if ! grep -qc 'python-preference' ~/.config/uv/uv.toml ; then
+
+# prepare the uv config file if it does not exist
+mkdir -p "$HOME/.config/uv"
+touch "$HOME/.config/uv/uv.toml"
+if ! grep -qc 'python-preference' "$HOME/.config/uv/uv.toml"; then
   # only use uv's own python versions, not any pyenv
-  echo 'python-preference="only-managed"' >> ~/.config/uv/uv.toml
+  echo 'python-preference="only-managed"' >> "$HOME/.config/uv/uv.toml"
 fi
