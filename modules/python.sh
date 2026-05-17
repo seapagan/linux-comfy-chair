@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 # python.sh Install the latest version of Python 3 using 'Pyenv'. Also install
-# 'Poetry' for dependency management and 'pipx' for managing global python
-# packages. Python 2 is no longer installed by
-# default, but can be installed using 'pyenv' if needed.
+# 'uv' and 'Poetry' for dependency management and 'pipx' for managing global
+# python packages. Python 2 is no longer installed by default, but can be
+# installed using 'pyenv' if needed.
 echo ""
 echo "---------------------------------------------------------------"
-echo "| Installing Python 3, Poetry and PipX.                       |"
+echo "| Installing Python 3, uv, Poetry and PipX.                   |"
 echo "---------------------------------------------------------------"
 echo ""
 
-
+# we still install pyenv, though I now tend to use `uv` for python version
+# management too. Pyenv is still handy to have an updated global version
+# available.
 curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 # install a couple of plugins...
 git clone https://github.com/yyuu/pyenv-pip-migrate.git ~/.pyenv/plugins/pyenv-pip-migrate
@@ -41,8 +43,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-pyenv install 3.12
-pyenv global 3.12
+pyenv install 3.14
+pyenv global 3.14
 # now update 'pip' to the latest version ...
 python3 -m pip install --upgrade pip
 
@@ -73,6 +75,10 @@ fi
 # run the above locally to use in this shell
 eval "$(register-python-argcomplete pipx)"
 
-# install 'uv' for python project and version management/ This can also replace
-# 'pipx' but we'll keep both available for now.
+# install 'uv' for python project and version management (replaces poetry). This
+# can also replace 'pipx' but we'll keep both available for now.
 curl -LsSf https://astral.sh/uv/install.sh | sh
+if ! grep -qc 'python-preference' ~/.config/uv/uv.toml ; then
+  # only use uv's own python versions, not any pyenv
+  echo 'python-preference="only-managed"' >> ~/.config/uv/uv.toml
+fi

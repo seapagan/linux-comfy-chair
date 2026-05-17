@@ -17,5 +17,6 @@ rustup component add clippy
 rustup component add rustfmt
 
 cargo install cargo-edit # upgrade dependencies from the CLI
+cargo install cargo-make # useful task runner
 
 cargo install bob-nvim # neovim version manager

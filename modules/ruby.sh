@@ -40,14 +40,16 @@ echo $'bundler\nsassc\nrails\nrspec\nrspec-rails' > ~/.rbenv/default-gems
 # set up .gemrc to avoid installing documentation for each gem...
 echo "gem: --no-document" > ~/.gemrc
 
-# install the latest ruby version and set as default
-rbenv install 3.3.5
-rbenv global 3.3.5
+# install the latest ruby 3.x version and set as default, also the new 4.x branch,
+# but NOT as default
+rbenv install 3.4.9
+rbenv install 4.0.4
+rbenv global 3.4.9
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the
 # installation will pause for overwrite confirmation These are the 'ri' and
 # 'rdoc' scripts
-rm ~/.rbenv/versions/3.3.5/bin/rdoc
-rm ~/.rbenv/versions/3.3.5/bin/ri
+rm ~/.rbenv/versions/3.4.9/bin/rdoc
+rm ~/.rbenv/versions/3.4.9/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update
