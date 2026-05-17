@@ -184,6 +184,23 @@ Optionally, also remove any tracking references to the old branch name :
 git remote prune origin
 ```
 
+## Development checks
+
+Run the shell syntax and ShellCheck validation with:
+
+```bash
+./scripts/check-shell.sh
+```
+
+This requires `shellcheck`; on Ubuntu, install it with:
+
+```bash
+sudo apt install shellcheck
+```
+
+The check validates the main bootstrapper and follows its sourced modules in
+context.
+
 ## To-Do
 
 - More robust fall-over on already configured systems. If Rbenv etc are already
