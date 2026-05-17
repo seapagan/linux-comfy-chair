@@ -13,9 +13,10 @@ echo >> "$shell_rc"
 echo "# Set up NVM" >> "$shell_rc"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+export NVM_DIR
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion # This loads nvm bash_completion
+[[ -r $NVM_DIR/bash_completion ]] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # set up some default packages to always install - these 2 allow the use of a
 # '.node-version' file which will choose the version of node to make default on

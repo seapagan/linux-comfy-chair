@@ -9,14 +9,14 @@ export DEBIAN_FRONTEND=noninteractive
 
 # make sure we are running under a Debian-based OS, as this script needs the
 # 'apt' command and their specific packages.
-debian=`dpkg --version | grep "Debian"`
+debian=$(dpkg --version | grep "Debian")
 if [ -z "$debian" ]; then
   echo "This script is only for Debian-based systems."
   exit 1
 fi
 
 # get the 'flavour' of this OS, ie debian,ubuntu etc
-flavour=$(tr '[:upper:]' '[:lower:]' <<< `lsb_release -is`)
+flavour=$(tr '[:upper:]' '[:lower:]' <<< "$(lsb_release -is)")
 
 # detect the user's shell and choose the matching startup file
 shell_type=$(basename "$SHELL")
@@ -34,7 +34,7 @@ case "$shell_type" in
 esac
 
 # lets see if we are running under WSL (Windows Subsystem for Linux)
-read osrelease </proc/sys/kernel/osrelease
+read -r osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
   os="wsl"
 else
@@ -48,7 +48,7 @@ else
 fi
 
 echo "Linux Comfy Chair v$VERSION (c) Grant Ramsay (seapagan@gmail.com)"
-if [ $os = "wsl" ]; then
+if [ "$os" = "wsl" ]; then
   echo " - Running under the 'Windows Subsystem for Linux (WSL)"
 fi
 if [ "$running_in_container" = "yes" ]; then
@@ -56,14 +56,14 @@ if [ "$running_in_container" = "yes" ]; then
 fi
 
 # save the path to this script for later use
-THISPATH="$(dirname $(readlink -f "$0"))"
+THISPATH="$(dirname "$(readlink -f "$0")")"
 echo
 echo "We are running from : $THISPATH"
 echo
 
 # make sure we have Git and sudo installed already. Some very minimal images
 # will not have these (eg the standard Ubuntu Docker image)
-if [ ! $(which git) ] || [ ! $(which sudo) ]; then
+if ! command -v git >/dev/null || ! command -v sudo >/dev/null; then
   echo "Git or/and Sudo are not installed, please install these and restart."
   exit 1
 fi
@@ -80,39 +80,39 @@ if  [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
 fi
 
 # source in the configuration file..
-. $THISPATH/comfy.config
+. "$THISPATH/comfy.config"
 
 # run the individual modules. This will be changed to read from an array of
 # modules..
-. $THISPATH/modules/updates.sh $flavour
-. $THISPATH/modules/packages.sh
+. "$THISPATH/modules/updates.sh" "$flavour"
+. "$THISPATH/modules/packages.sh"
 
 # WSL Specific work
-if [ $os = "wsl" ]; then
-  . $THISPATH/modules/wsl.sh
+if [ "$os" = "wsl" ]; then
+  . "$THISPATH/modules/wsl.sh"
 fi
 
 # ---------------------------------------------------------------------------- #
 #             comment out the modules below you do not want to run             #
 # ---------------------------------------------------------------------------- #
 # . $THISPATH/modules/nginx-php-pgsql.sh
-. $THISPATH/modules/rust.sh
+. "$THISPATH/modules/rust.sh"
 if [ "$running_in_container" = "yes" ]; then
   echo "Skipping Docker install inside a container."
 else
-  . $THISPATH/modules/docker.sh
+  . "$THISPATH/modules/docker.sh"
 fi
-. $THISPATH/modules/ruby.sh
-. $THISPATH/modules/node.sh
-. $THISPATH/modules/python.sh
-. $THISPATH/modules/perl.sh
-. $THISPATH/modules/extras.sh
+. "$THISPATH/modules/ruby.sh"
+. "$THISPATH/modules/node.sh"
+. "$THISPATH/modules/python.sh"
+. "$THISPATH/modules/perl.sh"
+. "$THISPATH/modules/extras.sh"
 # ---------------------------------------------------------------------------- #
 #                                end of modules                                #
 # ---------------------------------------------------------------------------- #
 
 # cleanup after ourselves
-. $THISPATH/modules/cleanup.sh
+. "$THISPATH/modules/cleanup.sh"
 
 echo
 echo "You now need to reboot this system for all the new changes to take " \
