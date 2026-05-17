@@ -2,3 +2,10 @@
 License.sublime_license
 *sublime-*
 .vscode
+
+# AI stuff
+.codex/
+.claude/
+.agents/
+AGENTS.md
+CLAUDE.md
