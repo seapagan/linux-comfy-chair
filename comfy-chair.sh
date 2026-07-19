@@ -33,6 +33,12 @@ case "$shell_type" in
     ;;
 esac
 
+# add .local/bin to the path for user-installed tools
+if ! grep -qc '/.local/bin' "$shell_rc" ; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
+fi
+export PATH="$HOME/.local/bin:$PATH"
+
 # lets see if we are running under WSL (Windows Subsystem for Linux)
 read -r osrelease </proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then

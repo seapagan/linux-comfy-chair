@@ -48,13 +48,6 @@ pyenv global 3.14
 # now update 'pip' to the latest version ...
 python3 -m pip install --upgrade pip
 
-# add the .local/bin to the path if it isn't already there...
-if ! grep -qc '/.local/bin' "$shell_rc" ; then
-  echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
-fi
-# run the above locally to use in this shell
-export PATH="$HOME/.local/bin:$PATH"
-
 # Install 'poetry' for packaging and dependency management.
 curl -sSL https://install.python-poetry.org | python3 -
 
