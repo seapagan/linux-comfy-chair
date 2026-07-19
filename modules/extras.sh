@@ -104,6 +104,30 @@ if ! grep -Fqc 'atuin init' "$shell_rc"; then
     >> "$shell_rc"
 fi
 
+# install 'delta' syntax-highlighting pager
+DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+curl -Lo git-delta.deb "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${ARCH}.deb"
+sudo DEBIAN_FRONTEND=noninteractive apt install -y ./git-delta.deb
+rm ./git-delta.deb
+
+# install 'hyperfine' command-line benchmarking tool
+# Debian reports 32-bit x86 as i386, but hyperfine names its package i686.
+if [ "$ARCH" = "i386" ]; then
+  HYPERFINE_ARCH="i686"
+else
+  HYPERFINE_ARCH="$ARCH"
+fi
+HYPERFINE_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/hyperfine/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo hyperfine.deb "https://github.com/sharkdp/hyperfine/releases/download/v${HYPERFINE_VERSION}/hyperfine_${HYPERFINE_VERSION}_${HYPERFINE_ARCH}.deb"
+sudo DEBIAN_FRONTEND=noninteractive apt install -y ./hyperfine.deb
+rm ./hyperfine.deb
+
+# install 'xh' HTTP client
+curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
+
+# install 'watchexec' command runner
+cargo binstall watchexec-cli --no-confirm
+
 # install `dust` as an alternative to `du`
 cargo binstall du-dust --no-confirm
 
