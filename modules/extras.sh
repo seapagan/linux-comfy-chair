@@ -46,7 +46,7 @@ sudo dpkg -i fd.deb
 rm ./fd.deb
 
 # install bob neovim version manager
-cargo bininstall bob-nvim --no-confirm
+cargo binstall bob-nvim --no-confirm
 # ensure we can find nvim if installed by bob:
 if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
   echo >> "$shell_rc"
@@ -59,6 +59,30 @@ cargo binstall lsplus --no-confirm
 
 # install `dust` as an alternative to `du`
 cargo binstall du-dust --no-confirm
+
+# install 'duf' as an alternative to 'df'
+case "$ARCH" in
+  amd64|arm64)
+    DUF_ARCH="$ARCH"
+    ;;
+  armhf)
+    DUF_ARCH="armv7"
+    ;;
+  i386)
+    DUF_ARCH="386"
+    ;;
+  ppc64el)
+    DUF_ARCH="ppc64le"
+    ;;
+  *)
+    echo "Unsupported architecture for duf: $ARCH"
+    exit 1
+    ;;
+esac
+DUF_VERSION=$(curl -s "https://api.github.com/repos/muesli/duf/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${DUF_ARCH}.deb"
+sudo DEBIAN_FRONTEND=noninteractive apt install -y ./duf.deb
+rm ./duf.deb
 
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh | bash

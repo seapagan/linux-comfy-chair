@@ -19,5 +19,5 @@ rustup component add rustfmt
 # add 'cargo-binstall' to speed up later installs.
 curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
-cargo bininstall cargo-edit --no-confirm # upgrade dependencies from the CLI
-cargo bininstall cargo-make --no-confirm # useful task runner
+cargo binstall cargo-edit --no-confirm # upgrade dependencies from the CLI
+cargo binstall cargo-make --no-confirm # useful task runner
