@@ -226,3 +226,34 @@ if ! grep -qc 'direnv hook' "$shell_rc"; then
     echo "eval \"\$(direnv hook $shell_type)\""
   } >> "$shell_rc"
 fi
+
+# generate shell completions for tools not installed from system packages
+if [ "$shell_type" = "bash" ]; then
+  completion_dir="$HOME/.local/share/bash-completion/completions"
+  completion_prefix=""
+else
+  completion_dir="$HOME/.local/share/zsh/site-functions"
+  completion_prefix="_"
+  if ! grep -Fqc '.local/share/zsh/site-functions' "$shell_rc"; then
+    cat << 'EOF' >> "$shell_rc"
+
+# Load completions for user-installed tools
+fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
+autoload -Uz compinit
+compinit
+EOF
+  fi
+fi
+mkdir -p "$completion_dir"
+
+lazygit completion "$shell_type" \
+  > "$completion_dir/${completion_prefix}lazygit"
+bob complete "$shell_type" > "$completion_dir/${completion_prefix}bob"
+atuin gen-completions --shell "$shell_type" \
+  > "$completion_dir/${completion_prefix}atuin"
+delta --generate-completion "$shell_type" \
+  > "$completion_dir/${completion_prefix}delta"
+xh --generate "complete-$shell_type" > "$completion_dir/${completion_prefix}xh"
+watchexec --completions "$shell_type" \
+  > "$completion_dir/${completion_prefix}watchexec"
+yq completion "$shell_type" > "$completion_dir/${completion_prefix}yq"
