@@ -16,7 +16,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 rustup component add clippy
 rustup component add rustfmt
 
-cargo install cargo-edit # upgrade dependencies from the CLI
-cargo install cargo-make # useful task runner
+# add 'cargo-binstall' to speed up later installs.
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
-cargo install bob-nvim # neovim version manager
+cargo bininstall cargo-edit --no-confirm # upgrade dependencies from the CLI
+cargo bininstall cargo-make --no-confirm # useful task runner

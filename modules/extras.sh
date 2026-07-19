@@ -45,6 +45,8 @@ curl -Lo fd.deb "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/
 sudo dpkg -i fd.deb
 rm ./fd.deb
 
+# install bob neovim version manager
+cargo bininstall bob-nvim --no-confirm
 # ensure we can find nvim if installed by bob:
 if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
   echo >> "$shell_rc"
@@ -52,6 +54,11 @@ if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
   echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"' >> "$shell_rc"
 fi
 
+# install 'lsplus' as an available `ls` replacement
+cargo binstall lsplus --no-confirm
+
+# install `dust` as an alternative to `du`
+cargo binstall du-dust --no-confirm
 
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh | bash
