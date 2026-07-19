@@ -11,7 +11,7 @@ echo
 echo "## Setting up NVM (Node Version Manager) ##"
 echo >> "$shell_rc"
 echo "# Set up NVM" >> "$shell_rc"
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
 
 NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 export NVM_DIR

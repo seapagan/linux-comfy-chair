@@ -11,16 +11,18 @@ echo
 \curl -L https://install.perlbrew.pl | bash
 if ! grep -qc 'perl5/perlbrew/etc/bashrc' "$shell_rc" ; then
   echo "## Adding Perlbrew to $shell_rc ##"
-  echo >> "$shell_rc"
-  echo "# Set up Perlbrew" >> "$shell_rc"
-  echo 'source "$HOME/perl5/perlbrew/etc/bashrc"' >> "$shell_rc"
+  {
+  echo
+  echo "# Set up Perlbrew"
+  echo 'source "$HOME/perl5/perlbrew/etc/bashrc"'
+  } >> "$shell_rc"
 fi
 # source perlbrew setup so we can use in this shell...
 source "$HOME/perl5/perlbrew/etc/bashrc"
 
 # install perl and select it...
-perlbrew install perl-5.42.2
-perlbrew switch perl-5.42.2
+perlbrew install perl-5.44.0
+perlbrew switch perl-5.44.0
 perlbrew install-cpanm
 # set up some cpan configuration
 (echo y; echo o conf auto_commit 1; echo o conf yaml_module YAML::XS; echo o conf use_sqlite yes; echo o conf commit) | cpan
