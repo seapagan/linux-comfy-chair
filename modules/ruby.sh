@@ -15,7 +15,7 @@ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
   cd "$HOME/.rbenv" && src/configure && make -C src
 )
 # add the rbenv setup to our profile, only if it is not already there
-if ! grep -qc 'rbenv init' "$shell_rc"; then
+if ! grep -q 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
   {
     echo

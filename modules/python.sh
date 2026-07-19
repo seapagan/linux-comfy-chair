@@ -28,13 +28,13 @@ ruff
 ipython
 EOF
 
-if ! grep -qc 'pyenv init' "$shell_rc"; then
+if ! grep -q 'pyenv init' "$shell_rc"; then
   echo "## Adding pyenv to $shell_rc ##"
   {
     echo
     echo "# Set up Pyenv"
     echo 'export PYENV_ROOT="$HOME/.pyenv"'
-    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'
+    echo 'command -v pyenv > /dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'
     echo "eval \"\$(pyenv init - $shell_type)\""
     echo 'eval "$(pyenv virtualenv-init -)"'
   } >> "$shell_rc"
@@ -63,7 +63,7 @@ python3 -m pip install --user pipx
 pipx ensurepath
 
 # add autocompletion for pipx
-if ! grep -qc 'pipx' "$shell_rc"; then
+if ! grep -q 'pipx' "$shell_rc"; then
   echo 'eval "$(register-python-argcomplete pipx)"' >> "$shell_rc"
 fi
 
@@ -77,7 +77,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # prepare the uv config file if it does not exist
 mkdir -p "$HOME/.config/uv"
 touch "$HOME/.config/uv/uv.toml"
-if ! grep -qc 'python-preference' "$HOME/.config/uv/uv.toml"; then
+if ! grep -q 'python-preference' "$HOME/.config/uv/uv.toml"; then
   # only use uv's own python versions, not any pyenv
   echo 'python-preference="only-managed"' >> "$HOME/.config/uv/uv.toml"
 fi

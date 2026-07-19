@@ -4,10 +4,19 @@
 
 # get this device arch:
 ARCH=$(dpkg --print-architecture)
+failed_installs=()
+
+install_with_cargo_binstall() {
+  local package=$1
+  if ! cargo binstall "$package" --no-confirm; then
+    echo "Warning: failed to install '$package' with cargo-binstall."
+    failed_installs+=("$package")
+  fi
+}
 
 # install 'zoxide' tool (this is a faster 'z' tool)
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-if ! grep -qc 'zoxide init' "$shell_rc"; then
+if ! grep -q 'zoxide init' "$shell_rc"; then
   {
     echo
     echo "# Set up 'zoxide' (jump around)"
@@ -49,9 +58,9 @@ sudo dpkg -i fd.deb
 rm ./fd.deb
 
 # install bob neovim version manager
-cargo binstall bob-nvim --no-confirm
+install_with_cargo_binstall bob-nvim
 # ensure we can find nvim if installed by bob:
-if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
+if command -v bob > /dev/null && ! grep -q 'bob/nvim-bin' "$shell_rc"; then
   {
     echo
     echo "# so we can find nvim"
@@ -60,11 +69,11 @@ if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
 fi
 
 # install 'lsplus' as an available `ls` replacement
-cargo binstall lsplus --no-confirm
+install_with_cargo_binstall lsplus
 
 # install 'yazi' terminal file manager
-cargo binstall yazi-fm --no-confirm
-if ! grep -Fqc 'function y()' "$shell_rc"; then
+install_with_cargo_binstall yazi-fm
+if command -v yazi > /dev/null && ! grep -Fq 'function y()' "$shell_rc"; then
   cat << 'EOF' >> "$shell_rc"
 
 # Set up 'yazi' with directory changing on exit
@@ -82,7 +91,7 @@ fi
 curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh |
   ATUIN_NO_MODIFY_PATH=1 sh
-if ! grep -Fqc '.atuin/bin/env' "$shell_rc"; then
+if ! grep -Fq '.atuin/bin/env' "$shell_rc"; then
   cat << 'EOF' >> "$shell_rc"
 
 # Add 'atuin' to the path
@@ -90,16 +99,24 @@ if ! grep -Fqc '.atuin/bin/env' "$shell_rc"; then
 EOF
 fi
 if [ "$shell_type" = "bash" ]; then
-  curl --proto '=https' --tlsv1.2 -LsSf \
+  bash_preexec_tmp=$(mktemp -t "bash-preexec.XXXXXX")
+  if ! curl --proto '=https' --tlsv1.2 -LsSf \
     https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh \
-    -o "$HOME/.bash-preexec.sh"
-  if ! grep -Fqc '.bash-preexec.sh' "$shell_rc"; then
+    -o "$bash_preexec_tmp" ||
+    ! mv "$bash_preexec_tmp" "$HOME/.bash-preexec.sh"; then
+    rm -f -- "$bash_preexec_tmp"
+    echo "Warning: failed to install bash-preexec."
+    failed_installs+=("bash-preexec")
+  fi
+  if [ -f "$HOME/.bash-preexec.sh" ] &&
+    ! grep -Fq '.bash-preexec.sh' "$shell_rc"; then
     cat << 'EOF' >> "$shell_rc"
 [[ -f "$HOME/.bash-preexec.sh" ]] && source "$HOME/.bash-preexec.sh"
 EOF
   fi
 fi
-if ! grep -Fqc 'atuin init' "$shell_rc"; then
+if { [ "$shell_type" != "bash" ] || [ -f "$HOME/.bash-preexec.sh" ]; } &&
+  ! grep -Fq 'atuin init' "$shell_rc"; then
   printf "eval \"\$(atuin init %s --disable-up-arrow)\"\n" "$shell_type" \
     >> "$shell_rc"
 fi
@@ -127,13 +144,13 @@ curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh |
   XH_BINDIR="$HOME/.local/bin" sh
 
 # install 'watchexec' command runner
-cargo binstall watchexec-cli --no-confirm
+install_with_cargo_binstall watchexec-cli
 
 # install 'tokei' code statistics tool
-cargo binstall tokei --no-confirm
+install_with_cargo_binstall tokei
 
 # install 'television' fuzzy finder
-cargo binstall television --no-confirm
+install_with_cargo_binstall television
 
 # map Debian architecture names to upstream release asset names
 case "$ARCH" in
@@ -193,7 +210,7 @@ sudo install yq /usr/local/bin/yq
 rm ./yq
 
 # install `dust` as an alternative to `du`
-cargo binstall du-dust --no-confirm
+install_with_cargo_binstall du-dust
 
 # install 'duf' as an alternative to 'df'
 case "$ARCH" in
@@ -219,7 +236,7 @@ rm ./duf.deb
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh |
   bin_path="$HOME/.local/bin" bash
-if ! grep -qc 'direnv hook' "$shell_rc"; then
+if ! grep -q 'direnv hook' "$shell_rc"; then
   {
     echo
     echo "# Set up 'direnv' (environment switcher)"
@@ -234,26 +251,56 @@ if [ "$shell_type" = "bash" ]; then
 else
   completion_dir="$HOME/.local/share/zsh/site-functions"
   completion_prefix="_"
-  if ! grep -Fqc '.local/share/zsh/site-functions' "$shell_rc"; then
+  if ! grep -Fq '.local/share/zsh/site-functions' "$shell_rc"; then
     cat << 'EOF' >> "$shell_rc"
 
 # Load completions for user-installed tools
 fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
-autoload -Uz compinit
-compinit
+if (( ${+functions[compdef]} )); then
+  for completion_file in "$HOME/.local/share/zsh/site-functions"/_*(N); do
+    completion_function=${completion_file:t}
+    source "$completion_file"
+    compdef "$completion_function" "${completion_function#_}"
+  done
+  unset completion_file completion_function
+else
+  autoload -Uz compinit
+  compinit
+fi
 EOF
   fi
 fi
 mkdir -p "$completion_dir"
 
-lazygit completion "$shell_type" \
-  > "$completion_dir/${completion_prefix}lazygit"
-bob complete "$shell_type" > "$completion_dir/${completion_prefix}bob"
-atuin gen-completions --shell "$shell_type" \
-  > "$completion_dir/${completion_prefix}atuin"
-delta --generate-completion "$shell_type" \
-  > "$completion_dir/${completion_prefix}delta"
-xh --generate "complete-$shell_type" > "$completion_dir/${completion_prefix}xh"
-watchexec --completions "$shell_type" \
-  > "$completion_dir/${completion_prefix}watchexec"
-yq completion "$shell_type" > "$completion_dir/${completion_prefix}yq"
+if command -v lazygit > /dev/null; then
+  lazygit completion "$shell_type" \
+    > "$completion_dir/${completion_prefix}lazygit"
+fi
+if command -v bob > /dev/null; then
+  bob complete "$shell_type" > "$completion_dir/${completion_prefix}bob"
+fi
+if command -v atuin > /dev/null; then
+  atuin gen-completions --shell "$shell_type" \
+    > "$completion_dir/${completion_prefix}atuin"
+fi
+if command -v delta > /dev/null; then
+  delta --generate-completion "$shell_type" \
+    > "$completion_dir/${completion_prefix}delta"
+fi
+if command -v xh > /dev/null; then
+  xh --generate "complete-$shell_type" \
+    > "$completion_dir/${completion_prefix}xh"
+fi
+if command -v watchexec > /dev/null; then
+  watchexec --completions "$shell_type" \
+    > "$completion_dir/${completion_prefix}watchexec"
+fi
+if command -v yq > /dev/null; then
+  yq completion "$shell_type" > "$completion_dir/${completion_prefix}yq"
+fi
+
+if ((${#failed_installs[@]} > 0)); then
+  echo
+  echo "The following optional components could not be installed or updated:"
+  printf ' - %s\n' "${failed_installs[@]}"
+fi

@@ -23,6 +23,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y nano htop openssh-server open
 # install winbind and its support lib to ping WINS hosts
 sudo DEBIAN_FRONTEND=noninteractive apt install -y winbind libnss-winbind
 # need to append to the /etc/nsswitch.conf file to enable if not already done ...
-if ! grep -qc 'wins' /etc/nsswitch.conf; then
+if ! grep -q 'wins' /etc/nsswitch.conf; then
   sudo sed -i '/hosts:/ s/$/ wins/' /etc/nsswitch.conf
 fi

@@ -9,7 +9,7 @@ echo "---------------------------------------------------------------"
 echo
 
 \curl -L https://install.perlbrew.pl | bash
-if ! grep -qc 'perl5/perlbrew/etc/bashrc' "$shell_rc"; then
+if ! grep -q 'perl5/perlbrew/etc/bashrc' "$shell_rc"; then
   echo "## Adding Perlbrew to $shell_rc ##"
   {
     echo
