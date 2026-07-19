@@ -128,6 +128,63 @@ curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
 # install 'watchexec' command runner
 cargo binstall watchexec-cli --no-confirm
 
+# map Debian architecture names to upstream release asset names
+case "$ARCH" in
+  amd64)
+    SHELLCHECK_ARCH="x86_64"
+    SHFMT_ARCH="amd64"
+    YQ_ARCH="amd64"
+    ;;
+  arm64)
+    SHELLCHECK_ARCH="aarch64"
+    SHFMT_ARCH="arm64"
+    YQ_ARCH="arm64"
+    ;;
+  armhf)
+    SHELLCHECK_ARCH="armv6hf"
+    SHFMT_ARCH="arm"
+    YQ_ARCH="arm"
+    ;;
+  i386)
+    SHELLCHECK_ARCH=""
+    SHFMT_ARCH="386"
+    YQ_ARCH="386"
+    ;;
+  *)
+    echo "Unsupported architecture for shell tools: $ARCH"
+    exit 1
+    ;;
+esac
+
+# install 'shellcheck' shell script analyser
+if [ -n "$SHELLCHECK_ARCH" ]; then
+  SHELLCHECK_VERSION=$(curl -s "https://api.github.com/repos/koalaman/shellcheck/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+  curl -Lo shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.${SHELLCHECK_ARCH}.tar.xz"
+  tar xf shellcheck.tar.xz --strip-components=1 \
+    "shellcheck-${SHELLCHECK_VERSION}/shellcheck"
+  sudo install shellcheck /usr/local/bin/shellcheck
+  rm shellcheck.tar.xz shellcheck
+else
+  # Upstream does not publish a Linux i386 binary.
+  sudo DEBIAN_FRONTEND=noninteractive apt install -y shellcheck
+fi
+
+# install 'shfmt' shell script formatter
+SHFMT_VERSION=$(curl -s "https://api.github.com/repos/mvdan/sh/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+curl -Lo shfmt "https://github.com/mvdan/sh/releases/download/${SHFMT_VERSION}/shfmt_${SHFMT_VERSION}_linux_${SHFMT_ARCH}"
+sudo install shfmt /usr/local/bin/shfmt
+rm ./shfmt
+
+# install 'jq' command-line JSON processor
+curl -Lo jq "https://github.com/jqlang/jq/releases/latest/download/jq-linux-${ARCH}"
+sudo install jq /usr/local/bin/jq
+rm ./jq
+
+# install 'yq' command-line YAML processor
+curl -Lo yq "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${YQ_ARCH}"
+sudo install yq /usr/local/bin/yq
+rm ./yq
+
 # install `dust` as an alternative to `du`
 cargo binstall du-dust --no-confirm
 
@@ -141,9 +198,6 @@ case "$ARCH" in
     ;;
   i386)
     DUF_ARCH="386"
-    ;;
-  ppc64el)
-    DUF_ARCH="ppc64le"
     ;;
   *)
     echo "Unsupported architecture for duf: $ARCH"
