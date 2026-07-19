@@ -128,6 +128,12 @@ curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
 # install 'watchexec' command runner
 cargo binstall watchexec-cli --no-confirm
 
+# install 'tokei' code statistics tool
+cargo binstall tokei --no-confirm
+
+# install 'television' fuzzy finder
+cargo binstall television --no-confirm
+
 # map Debian architecture names to upstream release asset names
 case "$ARCH" in
   amd64)
