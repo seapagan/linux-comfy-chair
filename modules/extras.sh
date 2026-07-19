@@ -62,6 +62,48 @@ fi
 # install 'lsplus' as an available `ls` replacement
 cargo binstall lsplus --no-confirm
 
+# install 'yazi' terminal file manager
+cargo binstall yazi-fm --no-confirm
+if ! grep -Fqc 'function y()' "$shell_rc"; then
+  cat <<'EOF' >> "$shell_rc"
+
+# Set up 'yazi' with directory changing on exit
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  command rm -f -- "$tmp"
+}
+EOF
+fi
+
+# install 'atuin' shell history
+curl --proto '=https' --tlsv1.2 -LsSf \
+  https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh \
+  | ATUIN_NO_MODIFY_PATH=1 sh
+if ! grep -Fqc '.atuin/bin/env' "$shell_rc"; then
+  cat <<'EOF' >> "$shell_rc"
+
+# Add 'atuin' to the path
+. "$HOME/.atuin/bin/env"
+EOF
+fi
+if [ "$shell_type" = "bash" ]; then
+  curl --proto '=https' --tlsv1.2 -LsSf \
+    https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh \
+    -o "$HOME/.bash-preexec.sh"
+  if ! grep -Fqc '.bash-preexec.sh' "$shell_rc"; then
+    cat <<'EOF' >> "$shell_rc"
+[[ -f "$HOME/.bash-preexec.sh" ]] && source "$HOME/.bash-preexec.sh"
+EOF
+  fi
+fi
+if ! grep -Fqc 'atuin init' "$shell_rc"; then
+  printf "eval \"\$(atuin init %s --disable-up-arrow)\"\n" "$shell_type" \
+    >> "$shell_rc"
+fi
+
 # install `dust` as an alternative to `du`
 cargo binstall du-dust --no-confirm
 
