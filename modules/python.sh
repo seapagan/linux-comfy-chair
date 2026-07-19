@@ -3,11 +3,11 @@
 # 'uv' and 'Poetry' for dependency management and 'pipx' for managing global
 # python packages. Python 2 is no longer installed by default, but can be
 # installed using 'pyenv' if needed.
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Python 3, uv, Poetry and PipX.                   |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 # we still install pyenv, though I now tend to use `uv` for python version
 # management too. Pyenv is still handy to have an updated global version
@@ -30,12 +30,14 @@ EOF
 
 if ! grep -qc 'pyenv init' "$shell_rc" ; then
   echo "## Adding pyenv to $shell_rc ##"
-  echo >> "$shell_rc"
-  echo "# Set up Pyenv" >> "$shell_rc"
-  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> "$shell_rc"
-  echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> "$shell_rc"
-  echo "eval \"\$(pyenv init - $shell_type)\"" >> "$shell_rc"
-  echo 'eval "$(pyenv virtualenv-init -)"' >> "$shell_rc"
+  {
+  echo
+  echo "# Set up Pyenv"
+  echo 'export PYENV_ROOT="$HOME/.pyenv"'
+  echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"'
+  echo "eval \"\$(pyenv init - $shell_type)\""
+  echo 'eval "$(pyenv virtualenv-init -)"'
+  } >> "$shell_rc"
 fi
 # run the above locally to use in this shell
 export PYENV_ROOT="$HOME/.pyenv"

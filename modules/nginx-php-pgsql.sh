@@ -4,11 +4,11 @@
 # plus php8.5 itself. we already installed all the required ppa's etc in the
 # packages/updates so lets just install
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Nginx and Postgresql.                            |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 sudo DEBIAN_FRONTEND=noninteractive apt install -y nginx nginx-extras php8.5-fpm postgresql-18
 

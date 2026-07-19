@@ -2,11 +2,11 @@
 # node.sh
 # Install nvm, the latest LTS version of Node and the latest actual version of Node..
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Latest Node and the LTS (default).               |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 echo "## Setting up NVM (Node Version Manager) ##"
 echo >> "$shell_rc"

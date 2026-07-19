@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # rust.sh Install the latest version of 'Rust' using 'Rustup'.
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Rust and related tools.                          |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 

@@ -2,11 +2,11 @@
 # perl.sh
 # install Perl using Perlbrew and set up cpan etc
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Perl.                                            |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 \curl -L https://install.perlbrew.pl | bash
 if ! grep -qc 'perl5/perlbrew/etc/bashrc' "$shell_rc" ; then

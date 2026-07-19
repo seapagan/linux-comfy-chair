@@ -10,12 +10,12 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt update
 
 # some minimal versions of Ubuntu lack these...
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing some packages that are often missing, but needed |"
 echo "| for the next step.                                          |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 sudo DEBIAN_FRONTEND=noninteractive apt install -y dialog apt-utils \
                         software-properties-common curl wget \
                         ca-certificates gnupg gnupg-agent apt-transport-https \
@@ -65,10 +65,10 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
 
 # update then upgrade...
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Updating all the currently installed Packages.              |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 sudo apt update
 sudo DEBIAN_FRONTEND=noninteractive apt -y full-upgrade

@@ -2,11 +2,11 @@
 # qemu-kvm.sh
 # Install support files needed to work with KVM virtual machines using libvirt
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Qemu and support files.                          |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 sudo DEBIAN_FRONTEND=noninteractive apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virt-manager ovmf cpu-checker
 

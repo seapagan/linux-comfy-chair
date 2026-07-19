@@ -2,11 +2,11 @@
 # docker.sh
 # install docker and docker-compose
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
 echo "| Installing Docker and Compose.                              |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
 # DONT DO ANY OF THIS IN WSL (Windows Subsystem for Linux)!
 if [ "$os" != "wsl" ]; then
