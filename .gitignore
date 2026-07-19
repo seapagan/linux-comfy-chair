@@ -12,3 +12,6 @@ CLAUDE.md
 
 # local Docker test logs
 logs/
+
+# changelog generator config
+.changelog_generator.toml
