@@ -46,7 +46,9 @@ perlbrew install-cpanm
 ) | cpan
 # now install useful modules for CPAN...
 cpanm Term::ReadLine::Perl --notest # we install this separately and with no tests so it will not timeout on unattended installs. Ohterwise may crash the script.
-cpanm CPAN Term::ReadKey YAML YAML::XS LWP CPAN::SQLite App::cpanoutdated Log::Log4perl XML::LibXML Text::Glob Neovim::Ext App::cpanminus
+cpanm CPAN Term::ReadKey YAML YAML::XS LWP CPAN::SQLite App::cpanoutdated Log::Log4perl XML::LibXML Text::Glob App::cpanminus
+# Its test suite downloads an obsolete Neovim nightly asset.
+cpanm Neovim::Ext --notest
 # Upgrade any modules that need it...
 echo "-> running 'cpan-outdated' on Perl modules...."
 cpan-outdated -p | cpanm

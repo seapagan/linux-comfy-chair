@@ -11,7 +11,9 @@ echo
 export PATH="$HOME/.rbenv/bin:$PATH"
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
 # install dynamic bash extension
-cd ~/.rbenv && src/configure && make -C src
+(
+  cd "$HOME/.rbenv" && src/configure && make -C src
+)
 # add the rbenv setup to our profile, only if it is not already there
 if ! grep -qc 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
@@ -44,9 +46,9 @@ echo "gem: --no-document" > ~/.gemrc
 
 # install the latest ruby 3.x version and set as default, also the new 4.x branch,
 # but NOT as default
-rbenv install 3.4.9
+rbenv install 3.4.10
 rbenv install 4.0.6
-rbenv global 3.4.9
+rbenv global 3.4.10
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the
 # installation will pause for overwrite confirmation These are the 'ri' and
 # 'rdoc' scripts

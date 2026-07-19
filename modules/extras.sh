@@ -123,7 +123,8 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y ./hyperfine.deb
 rm ./hyperfine.deb
 
 # install 'xh' HTTP client
-curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh
+curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh |
+  XH_BINDIR="$HOME/.local/bin" sh
 
 # install 'watchexec' command runner
 cargo binstall watchexec-cli --no-confirm
@@ -216,7 +217,8 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y ./duf.deb
 rm ./duf.deb
 
 # install 'direnv' tool (environment switcher)
-curl -sfL https://direnv.net/install.sh | bash
+curl -sfL https://direnv.net/install.sh |
+  bin_path="$HOME/.local/bin" bash
 if ! grep -qc 'direnv hook' "$shell_rc"; then
   {
     echo

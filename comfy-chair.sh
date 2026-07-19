@@ -34,6 +34,7 @@ case "$shell_type" in
 esac
 
 # add .local/bin to the path for user-installed tools
+mkdir -p "$HOME/.local/bin"
 if ! grep -qc '/.local/bin' "$shell_rc"; then
   echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
 fi
