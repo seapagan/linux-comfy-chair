@@ -34,20 +34,20 @@ case "$shell_type" in
 esac
 
 # add .local/bin to the path for user-installed tools
-if ! grep -qc '/.local/bin' "$shell_rc" ; then
+if ! grep -qc '/.local/bin' "$shell_rc"; then
   echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
 fi
 export PATH="$HOME/.local/bin:$PATH"
 
 # lets see if we are running under WSL (Windows Subsystem for Linux)
-read -r osrelease </proc/sys/kernel/osrelease
+read -r osrelease < /proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
   os="wsl"
 else
   os="linux"
 fi
 
-if [ -f /.dockerenv ] || grep -qaE '(docker|containerd|kubepods)' /proc/1/cgroup 2>/dev/null; then
+if [ -f /.dockerenv ] || grep -qaE '(docker|containerd|kubepods)' /proc/1/cgroup 2> /dev/null; then
   running_in_container="yes"
 else
   running_in_container="no"
@@ -69,7 +69,7 @@ echo
 
 # make sure we have Git and sudo installed already. Some very minimal images
 # will not have these (eg the standard Ubuntu Docker image)
-if ! command -v git >/dev/null || ! command -v sudo >/dev/null; then
+if ! command -v git > /dev/null || ! command -v sudo > /dev/null; then
   echo "Git or/and Sudo are not installed, please install these and restart."
   exit 1
 fi
@@ -77,12 +77,12 @@ fi
 # if this is a minimized system (eg ex Docker container) then the 'man' command
 # will be diverted to a stub. Lets set this back to the real Binary
 # Note : Without this the Perl installation will FAIL tests.
-if  [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
-    # Remove diverted man binary
-    sudo rm -f /usr/bin/man
-    sudo dpkg-divert --quiet --remove --rename /usr/bin/man
-    # remove the reminder from the MOTD
-    sudo rm -f /etc/update-motd.d/60-unminimize
+if [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
+  # Remove diverted man binary
+  sudo rm -f /usr/bin/man
+  sudo dpkg-divert --quiet --remove --rename /usr/bin/man
+  # remove the reminder from the MOTD
+  sudo rm -f /etc/update-motd.d/60-unminimize
 fi
 
 # source in the configuration file..

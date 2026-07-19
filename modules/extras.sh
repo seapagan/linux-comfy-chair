@@ -7,12 +7,12 @@ ARCH=$(dpkg --print-architecture)
 
 # install 'zoxide' tool (this is a faster 'z' tool)
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-if ! grep -qc 'zoxide init' "$shell_rc" ; then
-{
-  echo
-  echo "# Set up 'zoxide' (jump around)"
-  echo "eval \"\$(zoxide init $shell_type)\""
-} >> "$shell_rc"
+if ! grep -qc 'zoxide init' "$shell_rc"; then
+  {
+    echo
+    echo "# Set up 'zoxide' (jump around)"
+    echo "eval \"\$(zoxide init $shell_type)\""
+  } >> "$shell_rc"
 
 fi
 
@@ -52,11 +52,11 @@ rm ./fd.deb
 cargo binstall bob-nvim --no-confirm
 # ensure we can find nvim if installed by bob:
 if ! grep -qc 'bob/nvim-bin' "$shell_rc"; then
-{
-  echo
-  echo "# so we can find nvim"
-  echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"'
-} >> "$shell_rc"
+  {
+    echo
+    echo "# so we can find nvim"
+    echo 'export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"'
+  } >> "$shell_rc"
 fi
 
 # install 'lsplus' as an available `ls` replacement
@@ -65,7 +65,7 @@ cargo binstall lsplus --no-confirm
 # install 'yazi' terminal file manager
 cargo binstall yazi-fm --no-confirm
 if ! grep -Fqc 'function y()' "$shell_rc"; then
-  cat <<'EOF' >> "$shell_rc"
+  cat << 'EOF' >> "$shell_rc"
 
 # Set up 'yazi' with directory changing on exit
 function y() {
@@ -80,10 +80,10 @@ fi
 
 # install 'atuin' shell history
 curl --proto '=https' --tlsv1.2 -LsSf \
-  https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh \
-  | ATUIN_NO_MODIFY_PATH=1 sh
+  https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh |
+  ATUIN_NO_MODIFY_PATH=1 sh
 if ! grep -Fqc '.atuin/bin/env' "$shell_rc"; then
-  cat <<'EOF' >> "$shell_rc"
+  cat << 'EOF' >> "$shell_rc"
 
 # Add 'atuin' to the path
 . "$HOME/.atuin/bin/env"
@@ -94,7 +94,7 @@ if [ "$shell_type" = "bash" ]; then
     https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh \
     -o "$HOME/.bash-preexec.sh"
   if ! grep -Fqc '.bash-preexec.sh' "$shell_rc"; then
-    cat <<'EOF' >> "$shell_rc"
+    cat << 'EOF' >> "$shell_rc"
 [[ -f "$HOME/.bash-preexec.sh" ]] && source "$HOME/.bash-preexec.sh"
 EOF
   fi
@@ -196,7 +196,7 @@ cargo binstall du-dust --no-confirm
 
 # install 'duf' as an alternative to 'df'
 case "$ARCH" in
-  amd64|arm64)
+  amd64 | arm64)
     DUF_ARCH="$ARCH"
     ;;
   armhf)
@@ -217,10 +217,10 @@ rm ./duf.deb
 
 # install 'direnv' tool (environment switcher)
 curl -sfL https://direnv.net/install.sh | bash
-if ! grep -qc 'direnv hook' "$shell_rc" ; then
-{
-  echo
-  echo "# Set up 'direnv' (environment switcher)"
-  echo "eval \"\$(direnv hook $shell_type)\""
-} >> "$shell_rc"
+if ! grep -qc 'direnv hook' "$shell_rc"; then
+  {
+    echo
+    echo "# Set up 'direnv' (environment switcher)"
+    echo "eval \"\$(direnv hook $shell_type)\""
+  } >> "$shell_rc"
 fi

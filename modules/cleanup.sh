@@ -9,6 +9,6 @@ echo "---------------------------------------------------------------"
 echo
 
 # copy a basic .gitconfig if we have it...
-if [ -f "$THISPATH/support/.gitconfig" ] ; then
+if [ -f "$THISPATH/support/.gitconfig" ]; then
   cat "$THISPATH/support/.gitconfig" >> ~/.gitconfig
 fi

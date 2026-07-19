@@ -9,12 +9,12 @@ echo "---------------------------------------------------------------"
 echo
 
 \curl -L https://install.perlbrew.pl | bash
-if ! grep -qc 'perl5/perlbrew/etc/bashrc' "$shell_rc" ; then
+if ! grep -qc 'perl5/perlbrew/etc/bashrc' "$shell_rc"; then
   echo "## Adding Perlbrew to $shell_rc ##"
   {
-  echo
-  echo "# Set up Perlbrew"
-  echo 'source "$HOME/perl5/perlbrew/etc/bashrc"'
+    echo
+    echo "# Set up Perlbrew"
+    echo 'source "$HOME/perl5/perlbrew/etc/bashrc"'
   } >> "$shell_rc"
 fi
 # source perlbrew setup so we can use in this shell...
@@ -25,9 +25,25 @@ perlbrew install perl-5.44.0
 perlbrew switch perl-5.44.0
 perlbrew install-cpanm
 # set up some cpan configuration
-(echo y; echo o conf auto_commit 1; echo o conf yaml_module YAML::XS; echo o conf use_sqlite yes; echo o conf commit) | cpan
-(echo o conf prerequisites_policy follow; echo o conf build_requires_install_policy yes; echo o conf commit) | cpan
-(echo o conf colorize_output yes; echo o conf colorize_print bold white on_black; echo o conf colorize_warn bold red on_black; echo o conf colorize_debug green on_black; echo o conf commit) | cpan
+(
+  echo y
+  echo o conf auto_commit 1
+  echo o conf yaml_module YAML::XS
+  echo o conf use_sqlite yes
+  echo o conf commit
+) | cpan
+(
+  echo o conf prerequisites_policy follow
+  echo o conf build_requires_install_policy yes
+  echo o conf commit
+) | cpan
+(
+  echo o conf colorize_output yes
+  echo o conf colorize_print bold white on_black
+  echo o conf colorize_warn bold red on_black
+  echo o conf colorize_debug green on_black
+  echo o conf commit
+) | cpan
 # now install useful modules for CPAN...
 cpanm Term::ReadLine::Perl --notest # we install this separately and with no tests so it will not timeout on unattended installs. Ohterwise may crash the script.
 cpanm CPAN Term::ReadKey YAML YAML::XS LWP CPAN::SQLite App::cpanoutdated Log::Log4perl XML::LibXML Text::Glob Neovim::Ext App::cpanminus

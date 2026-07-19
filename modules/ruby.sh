@@ -13,13 +13,13 @@ curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
 # install dynamic bash extension
 cd ~/.rbenv && src/configure && make -C src
 # add the rbenv setup to our profile, only if it is not already there
-if ! grep -qc 'rbenv init' "$shell_rc" ; then
+if ! grep -qc 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
   {
-  echo
-  echo "# Set up Rbenv"
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"'
-  echo "eval \"\$(rbenv init - $shell_type)\""
+    echo
+    echo "# Set up Rbenv"
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    echo "eval \"\$(rbenv init - $shell_type)\""
   } >> "$shell_rc"
 fi
 # run the above command locally so we can get rbenv to work on this provisioning shell

@@ -23,9 +23,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y php8.5 php8.5-cli
 
 # their php 8.5 equivalents ...
 sudo DEBIAN_FRONTEND=noninteractive apt install -y php8.5-common php8.5-mysql php8.5-xml php8.5-xmlrpc \
-                    php8.5-curl php8.5-gd php8.5-imagick php8.5-cli php8.5-dev \
-                    php8.5-imap php8.5-mbstring php8.5-soap \
-                    php8.5-zip php8.5-intl php8.5-pgsql
+  php8.5-curl php8.5-gd php8.5-imagick php8.5-cli php8.5-dev \
+  php8.5-imap php8.5-mbstring php8.5-soap \
+  php8.5-zip php8.5-intl php8.5-pgsql
 
 # make sure we are using 8.1 by default
 sudo update-alternatives --set php /usr/bin/php8.5
