@@ -348,7 +348,11 @@ fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 if (( ${+functions[compdef]} )); then
   for completion_file in "$HOME/.local/share/zsh/site-functions"/_*(N); do
     completion_function=${completion_file:t}
-    autoload -Uz "$completion_function"
+    if [[ $completion_function = "_lazygit" ]]; then
+      source "$completion_file"
+    else
+      autoload -Uz "$completion_function"
+    fi
     compdef "$completion_function" "${completion_function#_}"
   done
   unset completion_file completion_function
