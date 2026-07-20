@@ -76,13 +76,18 @@ if command -v zoxide > /dev/null && ! grep -q 'zoxide init' "$shell_rc"; then
 fi
 
 # install 'fzf' tool (fuzzy finder)
+fzf_install_failed="no"
 if [ -x "$HOME/.fzf/install" ]; then
-  if ! git -C "$HOME/.fzf" pull --ff-only ||
-    ! "$HOME/.fzf/install" --all; then
-    record_failed_install fzf
+  if ! git -C "$HOME/.fzf" pull --ff-only; then
+    fzf_install_failed="yes"
   fi
-elif ! git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf" ||
-  ! "$HOME/.fzf/install" --all; then
+elif ! git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"; then
+  fzf_install_failed="yes"
+fi
+if [ ! -x "$HOME/.fzf/install" ] || ! "$HOME/.fzf/install" --all; then
+  fzf_install_failed="yes"
+fi
+if [ "$fzf_install_failed" = "yes" ]; then
   record_failed_install fzf
 fi
 
