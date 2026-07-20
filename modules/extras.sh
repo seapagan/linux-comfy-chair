@@ -45,11 +45,18 @@ esac
 install_binary_from_url() {
   local component=$1
   local url=$2
-  if ! curl -fLo "$component" "$url" ||
-    ! sudo install "$component" "/usr/local/bin/$component"; then
+  local binary_tmp
+
+  if ! binary_tmp=$(mktemp -t "${component}.XXXXXX"); then
+    record_failed_install "$component"
+    return
+  fi
+
+  if ! curl -fL -o "$binary_tmp" "$url" ||
+    ! sudo install "$binary_tmp" "/usr/local/bin/$component"; then
     record_failed_install "$component"
   fi
-  rm -f -- "./$component"
+  rm -f -- "$binary_tmp"
 }
 
 # install 'zoxide' tool (this is a faster 'z' tool)
@@ -276,12 +283,8 @@ else
 fi
 
 # install 'jq' command-line JSON processor
-if [ "$ARCH_SUPPORTED" = "yes" ]; then
-  install_binary_from_url jq \
-    "https://github.com/jqlang/jq/releases/latest/download/jq-linux-${ARCH}"
-else
-  record_failed_install jq
-fi
+install_binary_from_url jq \
+  "https://github.com/jqlang/jq/releases/latest/download/jq-linux-${ARCH}"
 
 # install 'yq' command-line YAML processor
 if [ "$ARCH_SUPPORTED" = "yes" ]; then
