@@ -336,7 +336,7 @@ fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 if (( ${+functions[compdef]} )); then
   for completion_file in "$HOME/.local/share/zsh/site-functions"/_*(N); do
     completion_function=${completion_file:t}
-    source "$completion_file"
+    autoload -Uz "$completion_function"
     compdef "$completion_function" "${completion_function#_}"
   done
   unset completion_file completion_function
@@ -349,29 +349,53 @@ EOF
 fi
 mkdir -p "$completion_dir"
 
+generate_completion() {
+  local component=$1
+  local output_file=$2
+  local completion_tmp
+  shift 2
+
+  if ! completion_tmp=$(mktemp "$completion_dir/.${component}.XXXXXX"); then
+    record_failed_install "$component completions"
+    return
+  fi
+
+  if "$@" > "$completion_tmp" && [ -s "$completion_tmp" ] &&
+    mv "$completion_tmp" "$output_file"; then
+    return
+  fi
+
+  rm -f -- "$completion_tmp"
+  record_failed_install "$component completions"
+}
+
 if command -v lazygit > /dev/null; then
-  lazygit completion "$shell_type" \
-    > "$completion_dir/${completion_prefix}lazygit"
+  generate_completion lazygit \
+    "$completion_dir/${completion_prefix}lazygit" \
+    lazygit completion "$shell_type"
 fi
 if command -v bob > /dev/null; then
-  bob complete "$shell_type" > "$completion_dir/${completion_prefix}bob"
+  generate_completion bob "$completion_dir/${completion_prefix}bob" \
+    bob complete "$shell_type"
 fi
 if command -v atuin > /dev/null; then
-  atuin gen-completions --shell "$shell_type" \
-    > "$completion_dir/${completion_prefix}atuin"
+  generate_completion atuin "$completion_dir/${completion_prefix}atuin" \
+    atuin gen-completions --shell "$shell_type"
 fi
 if command -v delta > /dev/null; then
-  delta --generate-completion "$shell_type" \
-    > "$completion_dir/${completion_prefix}delta"
+  generate_completion delta "$completion_dir/${completion_prefix}delta" \
+    delta --generate-completion "$shell_type"
 fi
 if command -v xh > /dev/null; then
-  xh --generate "complete-$shell_type" \
-    > "$completion_dir/${completion_prefix}xh"
+  generate_completion xh "$completion_dir/${completion_prefix}xh" \
+    xh --generate "complete-$shell_type"
 fi
 if command -v watchexec > /dev/null; then
-  watchexec --completions "$shell_type" \
-    > "$completion_dir/${completion_prefix}watchexec"
+  generate_completion watchexec \
+    "$completion_dir/${completion_prefix}watchexec" \
+    watchexec --completions "$shell_type"
 fi
 if command -v yq > /dev/null; then
-  yq completion "$shell_type" > "$completion_dir/${completion_prefix}yq"
+  generate_completion yq "$completion_dir/${completion_prefix}yq" \
+    yq completion "$shell_type"
 fi
