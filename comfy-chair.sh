@@ -33,12 +33,34 @@ case "$shell_type" in
     ;;
 esac
 
+# ensure the selected shell startup file exists before inspecting it
+if [ ! -e "$shell_rc" ]; then
+  touch "$shell_rc"
+fi
+
 # add .local/bin to the path for user-installed tools
 mkdir -p "$HOME/.local/bin"
 if ! grep -q '/.local/bin' "$shell_rc"; then
   echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
 fi
 export PATH="$HOME/.local/bin:$PATH"
+
+# collect optional installation failures across sourced modules
+failed_installs=()
+
+record_failed_install() {
+  local component=$1
+  echo "Warning: failed to install or update '$component'."
+  failed_installs+=("$component")
+}
+
+install_with_cargo_binstall() {
+  local package=$1
+  if ! command -v cargo-binstall > /dev/null ||
+    ! cargo binstall "$package" --no-confirm; then
+    record_failed_install "$package"
+  fi
+}
 
 # lets see if we are running under WSL (Windows Subsystem for Linux)
 read -r osrelease < /proc/sys/kernel/osrelease
@@ -124,3 +146,9 @@ fi
 echo
 echo "You now need to reboot this system for all the new changes to take " \
   "effect, or at least re-exec your shell (eg 'exec \$SHELL') to use the tools."
+
+if ((${#failed_installs[@]} > 0)); then
+  echo
+  echo "The following optional components could not be installed or updated:"
+  printf ' - %s\n' "${failed_installs[@]}"
+fi

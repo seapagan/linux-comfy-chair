@@ -17,7 +17,14 @@ rustup component add clippy
 rustup component add rustfmt
 
 # add 'cargo-binstall' to speed up later installs.
-curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+cargo_binstall_tmp=$(mktemp -t "cargo-binstall.XXXXXX")
+if ! curl -L --proto '=https' --tlsv1.2 -sSf \
+  https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
+  -o "$cargo_binstall_tmp" ||
+  ! bash "$cargo_binstall_tmp"; then
+  record_failed_install cargo-binstall
+fi
+rm -f -- "$cargo_binstall_tmp"
 
-cargo binstall cargo-edit --no-confirm # upgrade dependencies from the CLI
-cargo binstall cargo-make --no-confirm # useful task runner
+install_with_cargo_binstall cargo-edit # upgrade dependencies from the CLI
+install_with_cargo_binstall cargo-make # useful task runner
