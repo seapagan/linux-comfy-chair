@@ -166,28 +166,26 @@ fi
 
 # install 'atuin' shell history
 atuin_installer_tmp=$(mktemp -t "atuin-installer.XXXXXX")
-atuin_install_failed="no"
 if ! curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh \
   -o "$atuin_installer_tmp" ||
   ! ATUIN_NO_MODIFY_PATH=1 sh "$atuin_installer_tmp"; then
   record_failed_install atuin
-  atuin_install_failed="yes"
 fi
 rm -f -- "$atuin_installer_tmp"
 
-if [ -x "$HOME/.atuin/bin/atuin" ] && [ -f "$HOME/.atuin/bin/env" ]; then
+if [ -x "$HOME/.atuin/bin/atuin" ]; then
   export PATH="$HOME/.atuin/bin:$PATH"
-elif [ "$atuin_install_failed" = "no" ]; then
+else
   record_failed_install atuin
 fi
 
 if command -v atuin > /dev/null &&
-  ! grep -Fq '.atuin/bin/env' "$shell_rc"; then
+  ! grep -Fq 'export PATH="$HOME/.atuin/bin:$PATH"' "$shell_rc"; then
   cat << 'EOF' >> "$shell_rc"
 
 # Add 'atuin' to the path
-. "$HOME/.atuin/bin/env"
+export PATH="$HOME/.atuin/bin:$PATH"
 EOF
 fi
 if command -v atuin > /dev/null && [ "$shell_type" = "bash" ]; then
