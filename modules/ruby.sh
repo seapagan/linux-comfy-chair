@@ -10,10 +10,6 @@ echo
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
-# install dynamic bash extension
-(
-  cd "$HOME/.rbenv" && src/configure && make -C src
-)
 # add the rbenv setup to our profile, only if it is not already there
 if ! grep -q 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
@@ -23,6 +19,21 @@ if ! grep -q 'rbenv init' "$shell_rc"; then
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"'
     echo "eval \"\$(rbenv init - $shell_type)\""
   } >> "$shell_rc"
+fi
+if [ "$shell_type" = "zsh" ] &&
+  ! grep -Fq '.rbenv/completions' "$shell_rc"; then
+  cat << 'EOF' >> "$shell_rc"
+
+# Load rbenv completions
+fpath=("$HOME/.rbenv/completions" $fpath)
+if (( ${+functions[compdef]} )); then
+  autoload -Uz _rbenv
+  compdef _rbenv rbenv
+else
+  autoload -Uz compinit
+  compinit
+fi
+EOF
 fi
 # run the above command locally so we can get rbenv to work on this provisioning shell
 eval "$(rbenv init - bash)"
