@@ -47,6 +47,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # collect optional installation failures across sourced modules
 failed_installs=()
+skipped_cargo_installs=()
 
 record_failed_install() {
   local component=$1
@@ -64,6 +65,7 @@ install_with_cargo_binstall() {
   local package=$1
   if ! command -v cargo-binstall > /dev/null; then
     record_failed_install cargo-binstall
+    skipped_cargo_installs+=("$package")
     return
   fi
   if ! cargo binstall "$package" --no-confirm; then
@@ -160,4 +162,11 @@ if ((${#failed_installs[@]} > 0)); then
   echo
   echo "The following optional components could not be installed or updated:"
   printf ' - %s\n' "${failed_installs[@]}"
+fi
+
+if ((${#skipped_cargo_installs[@]} > 0)); then
+  echo
+  printf 'Rust tools skipped because cargo-binstall was unavailable:'
+  printf ' %s' "${skipped_cargo_installs[@]}"
+  echo
 fi
