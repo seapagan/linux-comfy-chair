@@ -50,14 +50,23 @@ failed_installs=()
 
 record_failed_install() {
   local component=$1
+  local failed_component
+  for failed_component in "${failed_installs[@]}"; do
+    if [ "$failed_component" = "$component" ]; then
+      return
+    fi
+  done
   echo "Warning: failed to install or update '$component'."
   failed_installs+=("$component")
 }
 
 install_with_cargo_binstall() {
   local package=$1
-  if ! command -v cargo-binstall > /dev/null ||
-    ! cargo binstall "$package" --no-confirm; then
+  if ! command -v cargo-binstall > /dev/null; then
+    record_failed_install cargo-binstall
+    return
+  fi
+  if ! cargo binstall "$package" --no-confirm; then
     record_failed_install "$package"
   fi
 }
