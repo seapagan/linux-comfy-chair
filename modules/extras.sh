@@ -9,6 +9,7 @@ ARCH=$(dpkg --print-architecture)
 ARCH_SUPPORTED="yes"
 case "$ARCH" in
   amd64)
+    LAZYGIT_ARCH="x86_64"
     HYPERFINE_ARCH="amd64"
     SHELLCHECK_ARCH="x86_64"
     SHFMT_ARCH="amd64"
@@ -16,6 +17,7 @@ case "$ARCH" in
     DUF_ARCH="amd64"
     ;;
   arm64)
+    LAZYGIT_ARCH="arm64"
     HYPERFINE_ARCH="arm64"
     SHELLCHECK_ARCH="aarch64"
     SHFMT_ARCH="arm64"
@@ -23,6 +25,7 @@ case "$ARCH" in
     DUF_ARCH="arm64"
     ;;
   armhf)
+    LAZYGIT_ARCH="armv6"
     HYPERFINE_ARCH="armhf"
     SHELLCHECK_ARCH="armv6hf"
     SHFMT_ARCH="arm"
@@ -30,6 +33,7 @@ case "$ARCH" in
     DUF_ARCH="armv7"
     ;;
   i386)
+    LAZYGIT_ARCH="32-bit"
     HYPERFINE_ARCH="i686"
     SHELLCHECK_ARCH=""
     SHFMT_ARCH="386"
@@ -85,12 +89,16 @@ if [ "$fzf_install_failed" = "yes" ]; then
 fi
 
 # install 'lazygit' tool
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-lazygit_archive="$install_tmp_dir/lazygit.tar.gz"
-lazygit_binary="$install_tmp_dir/lazygit"
-if ! curl -fLo "$lazygit_archive" "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" ||
-  ! tar -xf "$lazygit_archive" -C "$install_tmp_dir" lazygit ||
-  ! sudo install "$lazygit_binary" /usr/local/bin; then
+if [ "$ARCH_SUPPORTED" = "yes" ]; then
+  LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  lazygit_archive="$install_tmp_dir/lazygit.tar.gz"
+  lazygit_binary="$install_tmp_dir/lazygit"
+  if ! curl -fLo "$lazygit_archive" "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_linux_${LAZYGIT_ARCH}.tar.gz" ||
+    ! tar -xf "$lazygit_archive" -C "$install_tmp_dir" lazygit ||
+    ! sudo install "$lazygit_binary" /usr/local/bin; then
+    record_failed_install lazygit
+  fi
+else
   record_failed_install lazygit
 fi
 
