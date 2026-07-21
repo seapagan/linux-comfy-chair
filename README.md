@@ -81,6 +81,12 @@ from `.bashrc` or `.zshrc` to the correct file for your shell.
 
 ## General Information
 
+> [!IMPORTANT]
+> This bootstrapper deliberately installs the latest stable packages and tools
+> available at provisioning time. APT packages and most third-party tools are
+> intentionally not pinned, so separate runs may install different versions.
+> It is not intended to produce bit-for-bit reproducible systems.
+
 The script works on a bare newly installed system and provides the following
 functionality :
 
