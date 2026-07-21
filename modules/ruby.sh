@@ -4,20 +4,19 @@
 
 echo
 echo "---------------------------------------------------------------"
-echo "| Installing Ruby 3.                                          |"
+echo "| Installing Ruby 3 and 4                                     |"
 echo "---------------------------------------------------------------"
 echo
 
-export PATH="$HOME/.rbenv/bin:$PATH"
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+export PATH="$HOME/.rbenv/bin:$PATH"
 # add the rbenv setup to our profile, only if it is not already there
 if ! grep -q 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
   {
     echo
     echo "# Set up Rbenv"
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"'
-    echo "eval \"\$(rbenv init - $shell_type)\""
+    printf 'eval "$("$HOME/.rbenv/bin/rbenv" init - %s)"\n' "$shell_type"
   } >> "$shell_rc"
 fi
 if [ "$shell_type" = "zsh" ] &&
