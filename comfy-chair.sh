@@ -108,6 +108,16 @@ if ! command -v git > /dev/null || ! command -v sudo > /dev/null; then
   exit 1
 fi
 
+# keep installation downloads and extracted files out of the working directory
+if ! install_tmp_dir=$(mktemp -d -t "comfy-chair.XXXXXX"); then
+  echo "Could not create a temporary installation directory."
+  exit 1
+fi
+cleanup_install_tmp() {
+  rm -rf -- "$install_tmp_dir"
+}
+trap cleanup_install_tmp EXIT
+
 # if this is a minimized system (eg ex Docker container) then the 'man' command
 # will be diverted to a stub. Lets set this back to the real Binary
 # Note : Without this the Perl installation will FAIL tests.

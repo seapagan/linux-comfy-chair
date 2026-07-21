@@ -45,28 +45,21 @@ esac
 install_binary_from_url() {
   local component=$1
   local url=$2
-  local binary_tmp
-
-  if ! binary_tmp=$(mktemp -t "${component}.XXXXXX"); then
-    record_failed_install "$component"
-    return
-  fi
+  local binary_tmp="$install_tmp_dir/$component"
 
   if ! curl -fL -o "$binary_tmp" "$url" ||
     ! sudo install "$binary_tmp" "/usr/local/bin/$component"; then
     record_failed_install "$component"
   fi
-  rm -f -- "$binary_tmp"
 }
 
 # install 'zoxide' tool (this is a faster 'z' tool)
-zoxide_installer_tmp=$(mktemp -t "zoxide-installer.XXXXXX")
+zoxide_installer_tmp="$install_tmp_dir/zoxide-installer.sh"
 if ! curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh \
   -o "$zoxide_installer_tmp" ||
-  ! sh "$zoxide_installer_tmp"; then
+  ! (cd "$install_tmp_dir" && sh "$zoxide_installer_tmp"); then
   record_failed_install zoxide
 fi
-rm -f -- "$zoxide_installer_tmp"
 if command -v zoxide > /dev/null && ! grep -q 'zoxide init' "$shell_rc"; then
   {
     echo
@@ -93,46 +86,46 @@ fi
 
 # install 'lazygit' tool
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-if ! curl -fLo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" ||
-  ! tar xf lazygit.tar.gz lazygit ||
-  ! sudo install lazygit /usr/local/bin; then
+lazygit_archive="$install_tmp_dir/lazygit.tar.gz"
+lazygit_binary="$install_tmp_dir/lazygit"
+if ! curl -fLo "$lazygit_archive" "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" ||
+  ! tar -xf "$lazygit_archive" -C "$install_tmp_dir" lazygit ||
+  ! sudo install "$lazygit_binary" /usr/local/bin; then
   record_failed_install lazygit
 fi
-rm -f -- lazygit.tar.gz lazygit
 
 # install 'lazydocker' tool
-lazydocker_installer_tmp=$(mktemp -t "lazydocker-installer.XXXXXX")
+lazydocker_installer_tmp="$install_tmp_dir/lazydocker-installer.sh"
 if ! curl -sfL \
   https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh \
   -o "$lazydocker_installer_tmp" ||
-  ! bash "$lazydocker_installer_tmp"; then
+  ! (cd "$install_tmp_dir" && bash "$lazydocker_installer_tmp"); then
   record_failed_install lazydocker
 fi
-rm -f -- "$lazydocker_installer_tmp"
 
 # install 'bat' tool (cat clone with syntax highlighting)
 BAT_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/bat/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-if ! curl -fLo bat.deb "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${ARCH}.deb" ||
-  ! sudo apt install -y ./bat.deb; then
+bat_package="$install_tmp_dir/bat.deb"
+if ! curl -fLo "$bat_package" "https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${ARCH}.deb" ||
+  ! sudo apt install -y "$bat_package"; then
   record_failed_install bat
 fi
-rm -f -- ./bat.deb
 
 # install 'ripgrep' tool (grep clone with better performance)
 RIPGREP_VERSION=$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | grep -Po '"tag_name": "(\K[^"]*)')
-if ! curl -fLo ripgrep.deb "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}-1_$ARCH.deb" ||
-  ! sudo dpkg -i ripgrep.deb; then
+ripgrep_package="$install_tmp_dir/ripgrep.deb"
+if ! curl -fLo "$ripgrep_package" "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}-1_$ARCH.deb" ||
+  ! sudo dpkg -i "$ripgrep_package"; then
   record_failed_install ripgrep
 fi
-rm -f -- ./ripgrep.deb
 
 # install 'fd' tool (find clone with better performance)
 FD_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/fd/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-if ! curl -fLo fd.deb "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd-musl_${FD_VERSION}_$ARCH.deb" ||
-  ! sudo dpkg -i fd.deb; then
+fd_package="$install_tmp_dir/fd.deb"
+if ! curl -fLo "$fd_package" "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd-musl_${FD_VERSION}_$ARCH.deb" ||
+  ! sudo dpkg -i "$fd_package"; then
   record_failed_install fd
 fi
-rm -f -- ./fd.deb
 
 # install bob neovim version manager
 install_with_cargo_binstall bob-nvim
@@ -165,14 +158,14 @@ EOF
 fi
 
 # install 'atuin' shell history
-atuin_installer_tmp=$(mktemp -t "atuin-installer.XXXXXX")
+atuin_installer_tmp="$install_tmp_dir/atuin-installer.sh"
 if ! curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh \
   -o "$atuin_installer_tmp" ||
-  ! ATUIN_NO_MODIFY_PATH=1 sh "$atuin_installer_tmp"; then
+  ! (cd "$install_tmp_dir" &&
+    ATUIN_NO_MODIFY_PATH=1 sh "$atuin_installer_tmp"); then
   record_failed_install atuin
 fi
-rm -f -- "$atuin_installer_tmp"
 
 if [ -x "$HOME/.atuin/bin/atuin" ]; then
   export PATH="$HOME/.atuin/bin:$PATH"
@@ -189,7 +182,7 @@ export PATH="$HOME/.atuin/bin:$PATH"
 EOF
 fi
 if command -v atuin > /dev/null && [ "$shell_type" = "bash" ]; then
-  bash_preexec_tmp=$(mktemp -t "bash-preexec.XXXXXX")
+  bash_preexec_tmp="$install_tmp_dir/bash-preexec.sh"
   if ! curl --proto '=https' --tlsv1.2 -LsSf \
     https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh \
     -o "$bash_preexec_tmp" ||
@@ -219,11 +212,11 @@ fi
 # install 'delta' syntax-highlighting pager
 if [ "$ARCH_SUPPORTED" = "yes" ]; then
   DELTA_VERSION=$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
-  if ! curl -fLo git-delta.deb "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${ARCH}.deb" ||
-    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y ./git-delta.deb; then
+  delta_package="$install_tmp_dir/git-delta.deb"
+  if ! curl -fLo "$delta_package" "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${ARCH}.deb" ||
+    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y "$delta_package"; then
     record_failed_install delta
   fi
-  rm -f -- ./git-delta.deb
 else
   record_failed_install delta
 fi
@@ -232,23 +225,23 @@ fi
 # Debian reports 32-bit x86 as i386, but hyperfine names its package i686.
 if [ "$ARCH_SUPPORTED" = "yes" ]; then
   HYPERFINE_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/hyperfine/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-  if ! curl -fLo hyperfine.deb "https://github.com/sharkdp/hyperfine/releases/download/v${HYPERFINE_VERSION}/hyperfine_${HYPERFINE_VERSION}_${HYPERFINE_ARCH}.deb" ||
-    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y ./hyperfine.deb; then
+  hyperfine_package="$install_tmp_dir/hyperfine.deb"
+  if ! curl -fLo "$hyperfine_package" "https://github.com/sharkdp/hyperfine/releases/download/v${HYPERFINE_VERSION}/hyperfine_${HYPERFINE_VERSION}_${HYPERFINE_ARCH}.deb" ||
+    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y "$hyperfine_package"; then
     record_failed_install hyperfine
   fi
-  rm -f -- ./hyperfine.deb
 else
   record_failed_install hyperfine
 fi
 
 # install 'xh' HTTP client
-xh_installer_tmp=$(mktemp -t "xh-installer.XXXXXX")
+xh_installer_tmp="$install_tmp_dir/xh-installer.sh"
 if ! curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh \
   -o "$xh_installer_tmp" ||
-  ! XH_BINDIR="$HOME/.local/bin" sh "$xh_installer_tmp"; then
+  ! (cd "$install_tmp_dir" &&
+    XH_BINDIR="$HOME/.local/bin" sh "$xh_installer_tmp"); then
   record_failed_install xh
 fi
-rm -f -- "$xh_installer_tmp"
 
 # install 'watchexec' command runner
 install_with_cargo_binstall watchexec-cli
@@ -263,13 +256,14 @@ install_with_cargo_binstall television
 if [ "$ARCH_SUPPORTED" = "yes" ]; then
   if [ -n "$SHELLCHECK_ARCH" ]; then
     SHELLCHECK_VERSION=$(curl -s "https://api.github.com/repos/koalaman/shellcheck/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
-    if ! curl -fLo shellcheck.tar.xz "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.${SHELLCHECK_ARCH}.tar.xz" ||
-      ! tar xf shellcheck.tar.xz --strip-components=1 \
+    shellcheck_archive="$install_tmp_dir/shellcheck.tar.xz"
+    shellcheck_binary="$install_tmp_dir/shellcheck"
+    if ! curl -fLo "$shellcheck_archive" "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.${SHELLCHECK_ARCH}.tar.xz" ||
+      ! tar -xf "$shellcheck_archive" -C "$install_tmp_dir" --strip-components=1 \
         "shellcheck-${SHELLCHECK_VERSION}/shellcheck" ||
-      ! sudo install shellcheck /usr/local/bin/shellcheck; then
+      ! sudo install "$shellcheck_binary" /usr/local/bin/shellcheck; then
       record_failed_install shellcheck
     fi
-    rm -f -- shellcheck.tar.xz shellcheck
   else
     # Upstream does not publish a Linux i386 binary.
     if ! sudo DEBIAN_FRONTEND=noninteractive apt install -y shellcheck; then
@@ -307,22 +301,22 @@ install_with_cargo_binstall du-dust
 # install 'duf' as an alternative to 'df'
 if [ "$ARCH_SUPPORTED" = "yes" ]; then
   DUF_VERSION=$(curl -s "https://api.github.com/repos/muesli/duf/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-  if ! curl -fLo duf.deb "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${DUF_ARCH}.deb" ||
-    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y ./duf.deb; then
+  duf_package="$install_tmp_dir/duf.deb"
+  if ! curl -fLo "$duf_package" "https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${DUF_ARCH}.deb" ||
+    ! sudo DEBIAN_FRONTEND=noninteractive apt install -y "$duf_package"; then
     record_failed_install duf
   fi
-  rm -f -- ./duf.deb
 else
   record_failed_install duf
 fi
 
 # install 'direnv' tool (environment switcher)
-direnv_installer_tmp=$(mktemp -t "direnv-installer.XXXXXX")
+direnv_installer_tmp="$install_tmp_dir/direnv-installer.sh"
 if ! curl -sfL https://direnv.net/install.sh -o "$direnv_installer_tmp" ||
-  ! bin_path="$HOME/.local/bin" bash "$direnv_installer_tmp"; then
+  ! (cd "$install_tmp_dir" &&
+    bin_path="$HOME/.local/bin" bash "$direnv_installer_tmp"); then
   record_failed_install direnv
 fi
-rm -f -- "$direnv_installer_tmp"
 if command -v direnv > /dev/null && ! grep -q 'direnv hook' "$shell_rc"; then
   {
     echo
