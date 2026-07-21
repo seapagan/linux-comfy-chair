@@ -109,7 +109,7 @@ functionality :
   [cargo-make](https://github.com/sagiegurari/cargo-make).
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
-  Several PERL modules that make cpan easier are also pre-installed
+  Several Perl modules that make CPAN easier to use are also pre-installed.
 - Enable resolution of WINS hostnames
 - [`DISABLED BY DEFAULT`] Install the latest Nginx web server, PHP 8.5 FPM, CLI,
   common PHP extensions, and PostgreSQL 18.
