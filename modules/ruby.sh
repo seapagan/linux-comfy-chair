@@ -8,7 +8,11 @@ echo "| Installing Ruby 3 and 4                                     |"
 echo "---------------------------------------------------------------"
 echo
 
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+if ! run_downloaded_installer rbenv \
+  https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
+  rbenv-installer.sh bash; then
+  return
+fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 # add the rbenv setup to our profile, only if it is not already there
 if ! grep -q 'rbenv init' "$shell_rc"; then

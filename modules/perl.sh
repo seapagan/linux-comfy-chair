@@ -8,7 +8,10 @@ echo "| Installing Perl.                                            |"
 echo "---------------------------------------------------------------"
 echo
 
-\curl -L https://install.perlbrew.pl | bash
+if ! run_downloaded_installer perlbrew https://install.perlbrew.pl \
+  perlbrew-installer.sh bash; then
+  return
+fi
 if ! grep -q 'perl5/perlbrew/etc/bashrc' "$shell_rc"; then
   echo "## Adding Perlbrew to $shell_rc ##"
   {

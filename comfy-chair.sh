@@ -61,6 +61,21 @@ record_failed_install() {
   failed_installs+=("$component")
 }
 
+run_downloaded_installer() {
+  local component=$1
+  local url=$2
+  local filename=$3
+  local interpreter=$4
+  local installer="$install_tmp_dir/$filename"
+  shift 4
+
+  if ! curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$installer" ||
+    ! (cd "$install_tmp_dir" && "$interpreter" "$installer" "$@"); then
+    record_failed_install "$component"
+    return 1
+  fi
+}
+
 install_with_cargo_binstall() {
   local package=$1
   if ! command -v cargo-binstall > /dev/null; then
