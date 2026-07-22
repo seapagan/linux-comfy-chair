@@ -11,7 +11,7 @@ echo
 if ! run_downloaded_installer rbenv \
   https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
   rbenv-installer.sh bash; then
-  return
+  return 1
 fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 # add the rbenv setup to our profile, only if it is not already there

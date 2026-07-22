@@ -8,7 +8,7 @@ echo
 
 if ! run_downloaded_installer rustup https://sh.rustup.rs \
   rustup-installer.sh sh -y; then
-  return
+  return 1
 fi
 
 # add the .cargo/bin to the path for this shell in case we want to use it

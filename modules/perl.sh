@@ -10,7 +10,7 @@ echo
 
 if ! run_downloaded_installer perlbrew https://install.perlbrew.pl \
   perlbrew-installer.sh bash; then
-  return
+  return 1
 fi
 if ! grep -q 'perl5/perlbrew/etc/bashrc' "$shell_rc"; then
   echo "## Adding Perlbrew to $shell_rc ##"
