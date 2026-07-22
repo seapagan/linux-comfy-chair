@@ -6,7 +6,7 @@ project since the first release, with the latest changes at the top.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/seapagan/linux-comfy-chair/tree/HEAD)
+## [1.8.0](https://github.com/seapagan/linux-comfy-chair/releases/tag/1.8.0) (July 22, 2026)
 
 **Closed Issues**
 
@@ -15,13 +15,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 **New Features**
 
+- Add new tools and update versions of existing as required ([#25](https://github.com/seapagan/linux-comfy-chair/pull/25)) by [seapagan](https://github.com/seapagan)
 - Fix: improve Docker test logging and setup reliability ([#23](https://github.com/seapagan/linux-comfy-chair/pull/23)) by [seapagan](https://github.com/seapagan)
 - Fix: clean up shellcheck warnings ([#22](https://github.com/seapagan/linux-comfy-chair/pull/22)) by [seapagan](https://github.com/seapagan)
 - Feat: add Docker test harness ([#21](https://github.com/seapagan/linux-comfy-chair/pull/21)) by [seapagan](https://github.com/seapagan)
 - Fix: support zsh startup configuration ([#20](https://github.com/seapagan/linux-comfy-chair/pull/20)) by [seapagan](https://github.com/seapagan)
 - Change nginx provider ([#19](https://github.com/seapagan/linux-comfy-chair/pull/19)) by [seapagan](https://github.com/seapagan)
 
-[`Full Changelog`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...HEAD) | [`Diff`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...HEAD.diff) | [`Patch`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...HEAD.patch)
+[`Full Changelog`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...1.8.0) | [`Diff`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...1.8.0.diff) | [`Patch`](https://github.com/seapagan/linux-comfy-chair/compare/1.7.0...1.8.0.patch)
 
 ## [1.7.0](https://github.com/seapagan/linux-comfy-chair/releases/tag/1.7.0) (August 14, 2024)
 
