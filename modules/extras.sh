@@ -58,12 +58,9 @@ install_binary_from_url() {
 }
 
 # install 'zoxide' tool (this is a faster 'z' tool)
-zoxide_installer_tmp="$install_tmp_dir/zoxide-installer.sh"
-if ! curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh \
-  -o "$zoxide_installer_tmp" ||
-  ! (cd "$install_tmp_dir" && sh "$zoxide_installer_tmp"); then
-  record_failed_install zoxide
-fi
+run_downloaded_installer zoxide \
+  https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh \
+  zoxide-installer.sh sh
 if command -v zoxide > /dev/null && ! grep -q 'zoxide init' "$shell_rc"; then
   {
     echo
@@ -103,13 +100,9 @@ else
 fi
 
 # install 'lazydocker' tool
-lazydocker_installer_tmp="$install_tmp_dir/lazydocker-installer.sh"
-if ! curl -sfL \
+run_downloaded_installer lazydocker \
   https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh \
-  -o "$lazydocker_installer_tmp" ||
-  ! (cd "$install_tmp_dir" && bash "$lazydocker_installer_tmp"); then
-  record_failed_install lazydocker
-fi
+  lazydocker-installer.sh bash
 
 # install 'bat' tool (cat clone with syntax highlighting)
 BAT_VERSION=$(curl -s "https://api.github.com/repos/sharkdp/bat/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
@@ -166,14 +159,9 @@ EOF
 fi
 
 # install 'atuin' shell history
-atuin_installer_tmp="$install_tmp_dir/atuin-installer.sh"
-if ! curl --proto '=https' --tlsv1.2 -LsSf \
+ATUIN_NO_MODIFY_PATH=1 run_downloaded_installer atuin \
   https://github.com/atuinsh/atuin/releases/latest/download/atuin-installer.sh \
-  -o "$atuin_installer_tmp" ||
-  ! (cd "$install_tmp_dir" &&
-    ATUIN_NO_MODIFY_PATH=1 sh "$atuin_installer_tmp"); then
-  record_failed_install atuin
-fi
+  atuin-installer.sh sh
 
 if [ -x "$HOME/.atuin/bin/atuin" ]; then
   export PATH="$HOME/.atuin/bin:$PATH"
@@ -243,13 +231,9 @@ else
 fi
 
 # install 'xh' HTTP client
-xh_installer_tmp="$install_tmp_dir/xh-installer.sh"
-if ! curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh \
-  -o "$xh_installer_tmp" ||
-  ! (cd "$install_tmp_dir" &&
-    XH_BINDIR="$HOME/.local/bin" sh "$xh_installer_tmp"); then
-  record_failed_install xh
-fi
+XH_BINDIR="$HOME/.local/bin" run_downloaded_installer xh \
+  https://raw.githubusercontent.com/ducaale/xh/master/install.sh \
+  xh-installer.sh sh
 
 # install 'watchexec' command runner
 install_with_cargo_binstall watchexec-cli
@@ -319,12 +303,8 @@ else
 fi
 
 # install 'direnv' tool (environment switcher)
-direnv_installer_tmp="$install_tmp_dir/direnv-installer.sh"
-if ! curl -sfL https://direnv.net/install.sh -o "$direnv_installer_tmp" ||
-  ! (cd "$install_tmp_dir" &&
-    bin_path="$HOME/.local/bin" bash "$direnv_installer_tmp"); then
-  record_failed_install direnv
-fi
+bin_path="$HOME/.local/bin" run_downloaded_installer direnv \
+  https://direnv.net/install.sh direnv-installer.sh bash
 if command -v direnv > /dev/null && ! grep -q 'direnv hook' "$shell_rc"; then
   {
     echo
