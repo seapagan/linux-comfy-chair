@@ -7,5 +7,8 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
+  pre_merge_checks:
+    docstrings:
+      mode: "off"
 chat:
   auto_reply: true
