@@ -19,11 +19,11 @@ while true; do
   read -r -p "> " choice
 
   case "$choice" in
-    1|bash|Bash|BASH)
+    1 | bash | Bash | BASH)
       export SHELL=/bin/bash
       exec /bin/bash -l
       ;;
-    2|zsh|Zsh|ZSH)
+    2 | zsh | Zsh | ZSH)
       export SHELL=/bin/zsh
       exec /bin/zsh -l
       ;;

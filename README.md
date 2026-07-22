@@ -81,6 +81,12 @@ from `.bashrc` or `.zshrc` to the correct file for your shell.
 
 ## General Information
 
+> [!IMPORTANT]
+> This bootstrapper deliberately installs the latest stable packages and tools
+> available at provisioning time. APT packages and most third-party tools are
+> intentionally not pinned, so separate runs may install different versions.
+> It is not intended to produce bit-for-bit reproducible systems.
+
 The script works on a bare newly installed system and provides the following
 functionality :
 
@@ -95,25 +101,45 @@ functionality :
   via [`NVM`][nvm]. The LTS version is activated by default.
 - The [`Python`][python] scripting language, latest 3.x version
   via [`Pyenv`][pyenv]. [uv](https://docs.astral.sh/uv/),
-  [Poetry](https://python-poetry.org/) and [PipX](https://pypa.github.io/pipx/)
-  are all pre-installed.
-- The latest version of [`Rust`](https://www.rust-lang.org/) via `rustup`.
+  [Poetry](https://python-poetry.org/), [PipX](https://pypa.github.io/pipx/),
+  and [Ruff](https://github.com/astral-sh/ruff) are all pre-installed.
+- The latest version of [`Rust`](https://www.rust-lang.org/) via `rustup`, with
+  [cargo-binstall](https://github.com/cargo-bins/cargo-binstall),
+  [cargo-edit](https://github.com/killercup/cargo-edit), and
+  [cargo-make](https://github.com/sagiegurari/cargo-make).
 - Install the latest STABLE [`Perl`][perl] scripting language via
   [`Perlbrew`][perlbrew] with cpan and cpanm pre-installed and configured.
-  Several PERL modules that make cpan easier are also pre-installed
+  Several Perl modules that make CPAN easier to use are also pre-installed.
 - Enable resolution of WINS hostnames
 - [`DISABLED BY DEFAULT`] Install the latest Nginx web server, PHP 8.5 FPM, CLI,
   common PHP extensions, and PostgreSQL 18.
 - Install Docker and Docker-compose (unless on WSL2)
-- Some useful command-line tools are installed automatically, including
-  [zoxide](https://github.com/ajeetdsouza/zoxide),
-  [fzf](https://github.com/junegunn/fzf),
-  [lazygit](https://github.com/jesseduffield/lazygit),
-  [lazydocker](https://github.com/jesseduffield/lazydocker),
-  [bat](https://github.com/sharkdp/bat),
-  [ripgrep](https://github.com/BurntSushi/ripgrep),
-  [fd](https://github.com/sharkdp/fd), and
-  [direnv](https://direnv.net/).
+- Some useful command-line tools are installed automatically:
+  - Navigation and search: [zoxide](https://github.com/ajeetdsouza/zoxide),
+    [fzf](https://github.com/junegunn/fzf),
+    [Yazi](https://github.com/sxyazi/yazi),
+    [Television](https://github.com/alexpasmantier/television), and
+    [direnv](https://direnv.net/).
+  - Git and containers: [GitHub CLI](https://github.com/cli/cli),
+    [lazygit](https://github.com/jesseduffield/lazygit),
+    [delta](https://github.com/dandavison/delta), and
+    [lazydocker](https://github.com/jesseduffield/lazydocker).
+  - Files and storage: [bat](https://github.com/sharkdp/bat),
+    [ripgrep](https://github.com/BurntSushi/ripgrep),
+    [fd](https://github.com/sharkdp/fd),
+    [lsplus](https://github.com/seapagan/lsplus),
+    [dust](https://github.com/bootandy/dust), and
+    [duf](https://github.com/muesli/duf).
+  - Shell and development: [Atuin](https://github.com/atuinsh/atuin),
+    [Bob](https://github.com/MordechaiHadad/bob),
+    [ShellCheck](https://github.com/koalaman/shellcheck),
+    [shfmt](https://github.com/mvdan/sh),
+    [hyperfine](https://github.com/sharkdp/hyperfine), and
+    [Watchexec](https://github.com/watchexec/watchexec).
+  - Data and HTTP: [jq](https://github.com/jqlang/jq),
+    [yq](https://github.com/mikefarah/yq),
+    [xh](https://github.com/ducaale/xh), and
+    [Tokei](https://github.com/XAMPPRocky/tokei).
 
 You can enable or disable each module by commenting out the relevant section in
 the `comfy-chair.sh` script.

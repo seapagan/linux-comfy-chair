@@ -7,10 +7,10 @@
 distro=$(grep -h 'DISTRIB_ID' /etc/*-release | awk -F= '{print $2}')
 
 if [ "$distro" == "Ubuntu" ]; then
-  echo ""
+  echo
   echo "---------------------------------------------------------------"
   echo "| Installing WSL specific libraries for Ubuntu.               |"
   echo "---------------------------------------------------------------"
-  echo ""
+  echo
   sudo apt install -y ubuntu-wsl
 fi

@@ -33,15 +33,70 @@ case "$shell_type" in
     ;;
 esac
 
+# ensure the selected shell startup file exists before inspecting it
+if [ ! -e "$shell_rc" ]; then
+  touch "$shell_rc"
+fi
+
+# add .local/bin to the path for user-installed tools
+mkdir -p "$HOME/.local/bin"
+if ! grep -q '/.local/bin' "$shell_rc"; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
+fi
+export PATH="$HOME/.local/bin:$PATH"
+
+# collect optional installation failures across sourced modules
+failed_installs=()
+skipped_cargo_installs=()
+
+record_failed_install() {
+  local component=$1
+  local failed_component
+  for failed_component in "${failed_installs[@]}"; do
+    if [ "$failed_component" = "$component" ]; then
+      return
+    fi
+  done
+  echo "Warning: failed to install or update '$component'."
+  failed_installs+=("$component")
+}
+
+run_downloaded_installer() {
+  local component=$1
+  local url=$2
+  local filename=$3
+  local interpreter=$4
+  local installer="$install_tmp_dir/$filename"
+  shift 4
+
+  if ! curl --proto '=https' --tlsv1.2 -fsSL "$url" -o "$installer" ||
+    ! (cd "$install_tmp_dir" && "$interpreter" "$installer" "$@"); then
+    record_failed_install "$component"
+    return 1
+  fi
+}
+
+install_with_cargo_binstall() {
+  local package=$1
+  if ! command -v cargo-binstall > /dev/null; then
+    record_failed_install cargo-binstall
+    skipped_cargo_installs+=("$package")
+    return
+  fi
+  if ! cargo binstall "$package" --no-confirm; then
+    record_failed_install "$package"
+  fi
+}
+
 # lets see if we are running under WSL (Windows Subsystem for Linux)
-read -r osrelease </proc/sys/kernel/osrelease
+read -r osrelease < /proc/sys/kernel/osrelease
 if [[ $osrelease =~ "WSL" ]]; then
   os="wsl"
 else
   os="linux"
 fi
 
-if [ -f /.dockerenv ] || grep -qaE '(docker|containerd|kubepods)' /proc/1/cgroup 2>/dev/null; then
+if [ -f /.dockerenv ] || grep -qaE '(docker|containerd|kubepods)' /proc/1/cgroup 2> /dev/null; then
   running_in_container="yes"
 else
   running_in_container="no"
@@ -63,20 +118,30 @@ echo
 
 # make sure we have Git and sudo installed already. Some very minimal images
 # will not have these (eg the standard Ubuntu Docker image)
-if ! command -v git >/dev/null || ! command -v sudo >/dev/null; then
+if ! command -v git > /dev/null || ! command -v sudo > /dev/null; then
   echo "Git or/and Sudo are not installed, please install these and restart."
   exit 1
 fi
 
+# keep installation downloads and extracted files out of the working directory
+if ! install_tmp_dir=$(mktemp -d -t "comfy-chair.XXXXXX"); then
+  echo "Could not create a temporary installation directory."
+  exit 1
+fi
+cleanup_install_tmp() {
+  rm -rf -- "$install_tmp_dir"
+}
+trap cleanup_install_tmp EXIT
+
 # if this is a minimized system (eg ex Docker container) then the 'man' command
 # will be diverted to a stub. Lets set this back to the real Binary
 # Note : Without this the Perl installation will FAIL tests.
-if  [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
-    # Remove diverted man binary
-    sudo rm -f /usr/bin/man
-    sudo dpkg-divert --quiet --remove --rename /usr/bin/man
-    # remove the reminder from the MOTD
-    sudo rm -f /etc/update-motd.d/60-unminimize
+if [ "$(dpkg-divert --truename /usr/bin/man)" = "/usr/bin/man.REAL" ]; then
+  # Remove diverted man binary
+  sudo rm -f /usr/bin/man
+  sudo dpkg-divert --quiet --remove --rename /usr/bin/man
+  # remove the reminder from the MOTD
+  sudo rm -f /etc/update-motd.d/60-unminimize
 fi
 
 # source in the configuration file..
@@ -117,3 +182,16 @@ fi
 echo
 echo "You now need to reboot this system for all the new changes to take " \
   "effect, or at least re-exec your shell (eg 'exec \$SHELL') to use the tools."
+
+if ((${#failed_installs[@]} > 0)); then
+  echo
+  echo "The following optional components could not be installed or updated:"
+  printf ' - %s\n' "${failed_installs[@]}"
+fi
+
+if ((${#skipped_cargo_installs[@]} > 0)); then
+  echo
+  printf 'Rust tools skipped because cargo-binstall was unavailable:'
+  printf ' %s' "${skipped_cargo_installs[@]}"
+  echo
+fi

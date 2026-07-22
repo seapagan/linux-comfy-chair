@@ -62,8 +62,8 @@ Fix bugs/typos causing the 'z.sh' install to fail.
 
 **_The Old Garden seat (in the sun)_**
 
-* Update Python and Ruby to the latest versions.
-* Ensure the `docker-buildx` plugin is installed.
+- Update Python and Ruby to the latest versions.
+- Ensure the `docker-buildx` plugin is installed.
 
 [`Full Changelog`](https://github.com/seapagan/linux-comfy-chair/compare/1.4.1...1.4.2) | [`Diff`](https://github.com/seapagan/linux-comfy-chair/compare/1.4.1...1.4.2.diff) | [`Patch`](https://github.com/seapagan/linux-comfy-chair/compare/1.4.1...1.4.2.patch)
 

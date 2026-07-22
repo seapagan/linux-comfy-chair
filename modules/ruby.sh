@@ -2,23 +2,41 @@
 # ruby.sh
 # install ruby via the 'rbenv' system and some supporting plugins.
 
-echo ""
+echo
 echo "---------------------------------------------------------------"
-echo "| Installing Ruby 3.                                          |"
+echo "| Installing Ruby 3 and 4                                     |"
 echo "---------------------------------------------------------------"
-echo ""
+echo
 
+if ! run_downloaded_installer rbenv \
+  https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
+  rbenv-installer.sh bash; then
+  return 1
+fi
 export PATH="$HOME/.rbenv/bin:$PATH"
-curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
-# install dynamic bash extension
-cd ~/.rbenv && src/configure && make -C src
 # add the rbenv setup to our profile, only if it is not already there
-if ! grep -qc 'rbenv init' "$shell_rc" ; then
+if ! grep -q 'rbenv init' "$shell_rc"; then
   echo "## Adding rbenv to $shell_rc ##"
-  echo >> "$shell_rc"
-  echo "# Set up Rbenv" >> "$shell_rc"
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> "$shell_rc"
-  echo "eval \"\$(rbenv init - $shell_type)\"" >> "$shell_rc"
+  {
+    echo
+    echo "# Set up Rbenv"
+    printf 'eval "$("$HOME/.rbenv/bin/rbenv" init - %s)"\n' "$shell_type"
+  } >> "$shell_rc"
+fi
+if [ "$shell_type" = "zsh" ] &&
+  ! grep -Fq '.rbenv/completions' "$shell_rc"; then
+  cat << 'EOF' >> "$shell_rc"
+
+# Load rbenv completions
+fpath=("$HOME/.rbenv/completions" $fpath)
+if (( ${+functions[compdef]} )); then
+  autoload -Uz _rbenv
+  compdef _rbenv rbenv
+else
+  autoload -Uz compinit
+  compinit
+fi
+EOF
 fi
 # run the above command locally so we can get rbenv to work on this provisioning shell
 eval "$(rbenv init - bash)"
@@ -42,14 +60,14 @@ echo "gem: --no-document" > ~/.gemrc
 
 # install the latest ruby 3.x version and set as default, also the new 4.x branch,
 # but NOT as default
-rbenv install 3.4.9
-rbenv install 4.0.4
-rbenv global 3.4.9
+rbenv install 3.4.10
+rbenv install 4.0.6
+rbenv global 3.4.10
 # we need to erase 2 files temporarily (they will be regenerated) otherwise the
 # installation will pause for overwrite confirmation These are the 'ri' and
 # 'rdoc' scripts
-rm ~/.rbenv/versions/3.4.9/bin/rdoc
-rm ~/.rbenv/versions/3.4.9/bin/ri
+rm ~/.rbenv/versions/3.4.10/bin/rdoc
+rm ~/.rbenv/versions/3.4.10/bin/ri
 # now update RubyGems and the default gems
 gem update --system
 gem update

@@ -1,5 +1,13 @@
 # TODO
 
+## Docker Test Environment
+
+- Add a `--keep` option to `docker-shell.sh` that omits `docker run --rm` and
+  gives the retained container a unique, reported name. Allow it to be combined
+  with `--log` in either order, retain the container after both successful and
+  failed runs, and print commands for restarting, inspecting, copying files
+  from, and removing it.
+
 ## Low-Space and Low-Memory Systems
 
 Notes from testing on a Raspberry Pi 3 with 1 GB RAM and Raspberry Pi OS Trixie
